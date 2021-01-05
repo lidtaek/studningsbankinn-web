@@ -1,0 +1,53 @@
+{
+  "name": "studningsbankinn-web",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "build": "parcel build ./src/index.html",
+    "serve": "parcel ./src/index.html",
+    "dev": "parcel watch ./src/index.html",
+    "lint": "eslint . --ext .js,.vue --fix",
+    "heroku-postbuild": "npm run build"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.12.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.27",
+    "@fortawesome/free-solid-svg-icons": "^5.12.1",
+    "@fortawesome/vue-fontawesome": "^2.0.2",
+    "@saeris/vue-spinners": "^1.0.8",
+    "compression": "^1.7.4",
+    "date-fns": "^2.9.0",
+    "dotenv-flow": "^3.1.0",
+    "express": "^4.16.4",
+    "express-sslify": "^1.2.0",
+    "helmet": "^4.3.1",
+    "superagent": "^6.1.0",
+    "tiny-cookie": "^2.3.1",
+    "vue": "~2.6.11",
+    "vue-router": "^3.1.5",
+    "vue-the-mask": "^0.11.1"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.2.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.17.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^5.0.0",
+    "eslint-plugin-vue": "^7.4.1",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-compress": "^2.0.2",
+    "vue-hot-reload-api": "^2.3.4",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "posthtml": {
+    "recognizeSelfClosing": true
+  }
+}
