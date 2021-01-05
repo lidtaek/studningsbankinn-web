@@ -10,9 +10,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Verslunarskóli Íslands</td>
+          <tr
+            v-for="place in places"
+            :key="place.id"
+          >
+            <td>{{ place.id }}</td>
+            <td>{{ place.name }}</td>
           </tr>
         </tbody>
       </table>
@@ -21,7 +24,21 @@
 </template>
 
 <script>
+import agent from 'superagent'
+
 export default {
-  name: 'PlacesList'
+  name: 'PlacesList',
+  data () {
+    return {
+      places: []
+    }
+  },
+  created () {
+    const apiUrl = process.env.STUDNINGSBANKINN_API_URL
+
+    agent.get(apiUrl + '/places').then(res => {
+      this.places = res.body
+    })
+  }
 }
 </script>
