@@ -12,7 +12,7 @@
         <tbody>
           <tr>
             <td>1</td>
-            <td>Háskóli Íslands</td>
+            <td>Verslunarskóli Íslands</td>
           </tr>
         </tbody>
       </table>
