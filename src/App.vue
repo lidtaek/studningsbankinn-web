@@ -1,49 +1,44 @@
 <template>
   <div>
-    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-      <a
-        class="navbar-brand col-md-3 col-lg-2 me-0 px-3"
-        href="#"
-      >
-        Stuðningsbankinn
-      </a>
-      <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-          <a
-            class="nav-link"
-            href="#"
-          >
-            Skrá út
-          </a>
-        </li>
-      </ul>
-    </header>
-
-    <div class="container-fluid">
-      <div class="row">
-        <nav
-          id="sidebarMenu"
-          class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
+    <nav class="navbar is-white">
+      <div class="navbar-brand">
+        <a
+          class="navbar-item"
+          href="#"
         >
-          <div class="position-sticky pt-3">
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a
-                  class="nav-link active"
-                  aria-current="page"
-                  href="#"
-                >
-                  <span data-feather="home" />
-                  Staðir
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav>
+          Stuðningsbankinn
+        </a>
 
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-          <router-view />
-        </main>
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+        >
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+        </a>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="columns">
+        <div class="column is-3">
+          <aside class="menu">
+            <ul class="menu-list">
+              <li><a class="is-active">Staðir</a></li>
+              <li><a>Tegundir</a></li>
+            </ul>
+          </aside>
+        </div>
+
+        <div class="column is-9">
+          <main>
+            <router-view />
+          </main>
+        </div>
       </div>
     </div>
   </div>
@@ -54,69 +49,86 @@
 </script>
 
 <style>
-body {
-  font-size: .875rem;
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  height: 100%;
+  background: #ECF0F3;
 }
-
-.feather {
-  width: 16px;
-  height: 16px;
-  vertical-align: text-bottom;
+nav.navbar {
+  border-top: 4px solid #276cda;
+  margin-bottom: 1rem;
 }
-/*
- * Sidebar
- */
-
-.sidebar {
-  position: fixed;
-  top: 0;
-  /* rtl:raw:
-  right: 0;
-  */
-  bottom: 0;
-  /* rtl:remove */
-  left: 0;
-  z-index: 100; /* Behind the navbar */
-  padding: 48px 0 0; /* Height of navbar */
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+.navbar-item.brand-text {
+  font-weight: 300;
 }
-
-@media (max-width: 767.98px) {
-  .sidebar {
-    top: 5rem;
-  }
+.navbar-item, .navbar-link {
+  font-size: 14px;
+  font-weight: 700;
 }
-
-.sidebar-sticky {
-  position: relative;
-  top: 0;
-  height: calc(100vh - 48px);
-  padding-top: .5rem;
-  overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+.columns {
+  width: 100%;
+  height: 100%;
+  margin-left: 0;
 }
-
-.sidebar .nav-link {
-  font-weight: 500;
-  color: #333;
+.menu-label {
+  color: #8F99A3;
+  letter-spacing: 1.3;
+  font-weight: 700;
 }
-
-.sidebar .nav-link .feather {
-  margin-right: 4px;
-  color: #727272;
+.menu-list a {
+  color: #0F1D38;
+  font-size: 14px;
+  font-weight: 700;
 }
-
-.sidebar .nav-link.active {
-  color: #007bff;
+.menu-list a:hover {
+  background-color: transparent;
+  color: #276cda;
 }
-
-.sidebar .nav-link:hover .feather,
-.sidebar .nav-link.active .feather {
-  color: inherit;
+.menu-list a.is-active {
+  background-color: transparent;
+  color: #276cda;
+  font-weight: 700;
 }
-
-.sidebar-heading {
-  font-size: .75rem;
-  text-transform: uppercase;
+.card {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
+  margin-bottom: 2rem;
+}
+.card-header-title {
+  color: #8F99A3;
+  font-weight: 400;
+}
+.info-tiles {
+  margin: 1rem 0;
+}
+.info-tiles .subtitle {
+  font-weight: 300;
+  color: #8F99A3;
+}
+.hero.welcome.is-info {
+  background: #36D1DC;
+  background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);
+  background: linear-gradient(to right, #5B86E5, #36D1DC);
+}
+.hero.welcome .title, .hero.welcome .subtitle {
+  color: hsl(192, 17%, 99%);
+}
+.card .content {
+  font-size: 14px;
+}
+.card-footer-item {
+  font-size: 14px;
+  font-weight: 700;
+  color: #8F99A3;
+}
+.card-footer-item:hover {
+}
+.card-table .table {
+  margin-bottom: 0;
+}
+.events-card .card-table {
+  max-height: 250px;
+  overflow-y: scroll;
 }
 </style>

@@ -1,33 +1,28 @@
 <template>
-  <div class="pt-3 pb-2 mb-3 border-bottom">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-      <h1 class="h2">
-        Staðir
-      </h1>
-      <div class="btn-toolbar mb-2 mb-md-0">
-        <button
-          type="button"
-          class="btn btn-sm btn-outline-secondary"
-          @click="add()"
-        >
-          <span data-feather="plus" />
-          Stofna nýtt
-        </button>
-      </div>
-    </div>
-
-    <div class="table-responsive">
-      <table class="table align-middle">
+  <div>
+    <Hero
+      title="Staðir"
+      subtitle="Listi yfir alla skráða staði"
+    />
+    <section class="card">
+      <table class="table is-fullwidth">
         <thead>
           <tr>
-            <th scope="col">
+            <th>
               #
             </th>
-            <th scope="col">
+            <th>
               Nafn
             </th>
-            <th scope="col">
-              &nbsp;
+            <th class="has-text-right">
+              <button
+                class="button is-small"
+                @click="add()"
+              >
+                <span class="icon">
+                  <i class="fas fa-plus" />
+                </span>
+              </button>
             </th>
           </tr>
         </thead>
@@ -38,28 +33,32 @@
           >
             <td>{{ place.id }}</td>
             <td>{{ place.name }}</td>
-            <td class="text-end">
+            <td class="has-text-right">
               <button
-                type="button"
-                class="btn btn-sm btn-outline-secondary"
+                class="button is-small"
                 @click="edit(place.id)"
               >
-                <span data-feather="edit-2" />
-                Breyta
+                <span class="icon">
+                  <i class="fas fa-pen" />
+                </span>
               </button>
             </td>
           </tr>
         </tbody>
       </table>
-    </div>
+    </section>
   </div>
 </template>
 
 <script>
 import agent from 'superagent'
+import Hero from '../components/hero'
 
 export default {
   name: 'PlacesList',
+  components: {
+    Hero
+  },
   data () {
     return {
       places: []
