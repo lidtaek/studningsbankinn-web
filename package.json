@@ -11,7 +11,7 @@
     "build": "parcel build ./src/index.html",
     "serve": "parcel ./src/index.html",
     "dev": "parcel watch ./src/index.html",
-    "lint": "eslint . --ext .js,.vue --fix",
+    "lint": "eslint ./src --ext .js,.vue --fix",
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
