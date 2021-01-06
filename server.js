@@ -11,7 +11,9 @@ if (process.env.NODE_ENV === 'production') {
     trustProtoHeader: true
   }))
   app.use(compression())
-  app.use(helmet())
+  app.use(helmet({
+    contentSecurityPolicy: false
+  }))
 }
 
 app.use(bodyParser.json())
@@ -21,7 +23,5 @@ app.use(express.static('dist', {
   maxAge: '1y'
 }))
 
-app.set('port', process.env.PORT || 3010)
-app.listen(app.get('port'), () => {
-  console.log('App listening on port ' + app.get('port'))
-})
+const port = process.env.PORT || 3010
+app.listen(port)
