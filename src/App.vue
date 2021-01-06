@@ -28,8 +28,14 @@
         <div class="column is-3">
           <aside class="menu">
             <ul class="menu-list">
-              <li><a class="is-active">Staðir</a></li>
-              <li><a>Tegundir</a></li>
+              <li>
+                <router-link
+                  to="/places"
+                  active-class="is-active"
+                >
+                  Staðir
+                </router-link>
+              </li>
             </ul>
           </aside>
         </div>
