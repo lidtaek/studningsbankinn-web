@@ -15,10 +15,6 @@
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.12.1",
-    "@fortawesome/fontawesome-svg-core": "^1.2.27",
-    "@fortawesome/free-solid-svg-icons": "^5.12.1",
-    "@fortawesome/vue-fontawesome": "^2.0.2",
     "@saeris/vue-spinners": "^1.0.8",
     "compression": "^1.7.4",
     "date-fns": "^2.9.0",
