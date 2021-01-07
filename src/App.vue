@@ -27,6 +27,9 @@
       <div class="columns">
         <div class="column is-3">
           <aside class="menu">
+            <p class="menu-label">
+              Grunnvirkni
+            </p>
             <ul class="menu-list">
               <li>
                 <router-link
@@ -42,6 +45,14 @@
                   active-class="is-active"
                 >
                   Spurningar
+                </router-link>
+              </li>
+              <li>
+                <router-link
+                  to="/questioncategories"
+                  active-class="is-active"
+                >
+                  Spurningaflokkar
                 </router-link>
               </li>
             </ul>

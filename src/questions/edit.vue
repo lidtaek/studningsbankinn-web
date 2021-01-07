@@ -60,6 +60,7 @@
 import agent from 'superagent'
 import Hero from '../components/hero'
 import Notification from '../components/notification'
+
 export default {
   name: 'QuestionsEdit',
   components: {

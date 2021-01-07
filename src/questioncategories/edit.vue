@@ -1,7 +1,7 @@
 <template>
   <div>
     <Hero
-      title="Staðir"
+      title="Spurningaflokkar"
       :subtitle="subtitle"
     />
     <section class="card">
@@ -17,71 +17,10 @@
 
         <div class="columns">
           <div class="field column is-12">
-            <label class="label">Nafn:</label>
+            <label class="label">Heiti:</label>
             <div class="control">
               <input
-                v-model="place.name"
-                class="input"
-                type="text"
-              >
-            </div>
-          </div>
-        </div>
-
-        <div class="columns">
-          <div class="field column is-12">
-            <label class="label">Lýsing:</label>
-            <div class="control">
-              <textarea
-                v-model="place.description"
-                class="textarea"
-                placeholder="Textarea"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="columns">
-          <div class="field column is-6">
-            <label class="label">Vefsíða:</label>
-            <div class="control">
-              <input
-                v-model="place.website"
-                class="input"
-                type="text"
-              >
-            </div>
-          </div>
-
-          <div class="field column is-6">
-            <label class="label">Sími:</label>
-            <div class="control">
-              <input
-                v-model="place.phone"
-                class="input"
-                type="text"
-              >
-            </div>
-          </div>
-        </div>
-
-        <div class="columns">
-          <div class="field column is-6">
-            <label class="label">Heimilisfang:</label>
-            <div class="control">
-              <input
-                v-model="place.address"
-                class="input"
-                type="text"
-              >
-            </div>
-          </div>
-
-          <div class="field column is-6">
-            <label class="label">Póstnúmer:</label>
-            <div class="control">
-              <input
-                v-model="place.postcode"
+                v-model="category.name"
                 class="input"
                 type="text"
               >
@@ -122,14 +61,14 @@ import agent from 'superagent'
 import Hero from '../components/hero'
 import Notification from '../components/notification'
 export default {
-  name: 'PlacesEdit',
+  name: 'QuestionCategoriesEdit',
   components: {
     Hero,
     Notification
   },
   data () {
     return {
-      place: {},
+      category: {},
       message: '',
       success: false,
       error: false
@@ -138,11 +77,11 @@ export default {
   computed: {
     subtitle () {
       const id = this.$route.params.id
-      return !isNaN(Number(id)) ? 'Breyta skráningu' : 'Skrá nýjan stað'
+      return !isNaN(Number(id)) ? 'Breyta flokki' : 'Skrá nýjan flokk'
     }
   },
   created () {
-    const apiUrl = process.env.STUDNINGSBANKINN_API_URL + '/places'
+    const apiUrl = process.env.STUDNINGSBANKINN_API_URL + '/questioncategories'
     const id = this.$route.params.id
 
     if (!isNaN(Number(id))) {
@@ -150,26 +89,26 @@ export default {
         .get(apiUrl + '/?id=' + id)
         .then(res => {
           if (res.body.length === 1) {
-            this.place = res.body[0]
+            this.category = res.body[0]
           } else {
             this.error = true
-            this.message = 'Staður fannst ekki'
+            this.message = 'Spurning fannst ekki'
           }
         })
         .catch(e => {
           this.error = true
-          this.message = 'Staður fannst ekki'
+          this.message = 'Spurning fannst ekki'
         })
     }
   },
   methods: {
     save () {
       this.success = false
-      const apiUrl = process.env.STUDNINGSBANKINN_API_URL + '/places'
-      const method = this.place.id ? 'put' : 'post'
+      const apiUrl = process.env.STUDNINGSBANKINN_API_URL + '/questioncategories'
+      const method = this.category.id ? 'put' : 'post'
 
       agent(method, apiUrl)
-        .send(this.place)
+        .send(this.category)
         .then(res => {
           if (res.body.id > 0) {
             this.success = true
@@ -178,16 +117,16 @@ export default {
         })
         .catch(e => {
           this.error = true
-          this.message = 'Ekki tókst að vista stað'
+          this.message = 'Ekki tókst að vista spurningu'
         })
     },
     del () {
       this.success = false
-      const apiUrl = process.env.STUDNINGSBANKINN_API_URL + '/places'
+      const apiUrl = process.env.STUDNINGSBANKINN_API_URL + '/questioncategories'
 
       agent
         .del(apiUrl)
-        .send(this.place)
+        .send(this.category)
         .then(res => {
           if (res.body.id > 0) {
             this.success = true
@@ -196,7 +135,7 @@ export default {
         })
         .catch(e => {
           this.error = true
-          this.message = 'Ekki tókst að eyða staði'
+          this.message = 'Ekki tókst að eyða spurningu'
         })
     }
   }
