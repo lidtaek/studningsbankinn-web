@@ -28,7 +28,7 @@
         <div class="column is-3">
           <aside class="menu">
             <p class="menu-label">
-              Grunnvirkni
+              Gagnagrunnur
             </p>
             <ul class="menu-list">
               <li>
@@ -53,6 +53,19 @@
                   active-class="is-active"
                 >
                   Spurningaflokkar
+                </router-link>
+              </li>
+            </ul>
+            <p class="menu-label">
+              Kerfi
+            </p>
+            <ul class="menu-list">
+              <li>
+                <router-link
+                  to="/answers"
+                  active-class="is-active"
+                >
+                  Svör
                 </router-link>
               </li>
             </ul>
