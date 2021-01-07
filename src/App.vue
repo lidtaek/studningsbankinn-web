@@ -36,6 +36,14 @@
                   Staðir
                 </router-link>
               </li>
+              <li>
+                <router-link
+                  to="/questions"
+                  active-class="is-active"
+                >
+                  Spurningar
+                </router-link>
+              </li>
             </ul>
           </aside>
         </div>

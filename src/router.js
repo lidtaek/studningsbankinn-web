@@ -7,14 +7,24 @@ export default new Router({
   routes: [
     {
       name: 'ListPlaces',
-      path: '/',
-      alias: '/places',
+      path: '/places',
+      alias: '/',
       component: () => import('./places/list.vue')
     },
     {
       name: 'EditPlaces',
       path: '/places/:id',
       component: () => import('./places/edit.vue')
+    },
+    {
+      name: 'ListQuestions',
+      path: '/questions',
+      component: () => import('./questions/list.vue')
+    },
+    {
+      name: 'EditQuestions',
+      path: '/questions/:id',
+      component: () => import('./questions/edit.vue')
     }
   ]
 })
