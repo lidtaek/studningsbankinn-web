@@ -35,6 +35,16 @@ export default new Router({
       name: 'EditQuestionCategories',
       path: '/questioncategories/:id',
       component: () => import('./questioncategories/edit.vue')
+    },
+    {
+      name: 'ListAnswers',
+      path: '/answers',
+      component: () => import('./answers/list.vue')
+    },
+    {
+      name: 'EditAnswers',
+      path: '/answers/:id',
+      component: () => import('./answers/edit.vue')
     }
   ]
 })
