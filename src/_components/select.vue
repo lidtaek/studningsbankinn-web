@@ -4,11 +4,12 @@
     <div class="control">
       <div class="select is-fullwidth">
         <select
+          :value="value"
           :disabled="disabled"
-          @change="$emit('change', $event.target.value)"
+          @change="$emit('input', $event.target.value)"
         >
           <option
-            :value="undefined"
+            :value="null"
           >
             - Veljið
           </option>

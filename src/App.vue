@@ -6,7 +6,7 @@
           class="navbar-item"
           href="#"
         >
-          Stuðningsbankinn
+          STUÐNINGSBANKINN
         </a>
 
         <a
@@ -66,6 +66,19 @@
                   active-class="is-active"
                 >
                   Svör
+                </router-link>
+              </li>
+            </ul>
+            <p class="menu-label">
+              Notendur
+            </p>
+            <ul class="menu-list">
+              <li>
+                <router-link
+                  to="/users"
+                  active-class="is-active"
+                >
+                  Notendur
                 </router-link>
               </li>
             </ul>
