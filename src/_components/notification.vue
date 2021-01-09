@@ -56,6 +56,12 @@ export default {
     },
     success (val) {
       this.successNotification = val
+
+      if (val) {
+        setTimeout(() => {
+          this.close()
+        }, 2000)
+      }
     }
   },
   methods: {

@@ -52,7 +52,7 @@
 
 <script>
 import agent from 'superagent'
-import Hero from '../components/hero'
+import Hero from '../_components/hero'
 
 export default {
   name: 'QuestionCategoriesList',

@@ -16,40 +16,30 @@
         />
 
         <div class="columns">
-          <div class="field column is-12">
-            <label class="label">Spurning:</label>
-            <div class="control">
-              <input
-                v-model="question.question"
-                class="input"
-                type="text"
-              >
-            </div>
-          </div>
+          <Input
+            v-model="question.question"
+            :disabled="working"
+            class="column is-12"
+            label="Spurning"
+          />
         </div>
 
         <div class="columns">
-          <div class="field column is-6">
-            <div class="control">
-              <button
-                class="button is-primary"
-                @click="save()"
-              >
-                Vista
-              </button>
-            </div>
-          </div>
+          <Button
+            :disabled="working"
+            label="Vista"
+            class="column is-6"
+            @click="save()"
+          />
 
-          <div class="field column is-6 has-text-right">
-            <div class="control">
-              <button
-                class="button is-danger is-light"
-                @click="del()"
-              >
-                Eyða
-              </button>
-            </div>
-          </div>
+          <Button
+            v-if="isEdit"
+            :disabled="working"
+            type="danger"
+            label="Eyða"
+            class="column is-6 has-text-right"
+            @click="del()"
+          />
         </div>
       </form>
     </section>
@@ -57,22 +47,26 @@
 </template>
 
 <script>
-import agent from 'superagent'
-import Hero from '../components/hero'
-import Notification from '../components/notification'
+import makeAPI from '../api'
+import Hero from '../_components/hero'
+import Notification from '../_components/notification'
+import Input from '../_components/input'
+import Button from '../_components/button'
+import EditMixin from '../_mixins/edit'
 
 export default {
   name: 'QuestionsEdit',
   components: {
+    Input,
+    Button,
     Hero,
     Notification
   },
+  mixins: [EditMixin],
   data () {
     return {
-      question: {},
-      message: '',
-      success: false,
-      error: false
+      questionApi: {},
+      question: {}
     }
   },
   computed: {
@@ -82,61 +76,68 @@ export default {
     }
   },
   created () {
-    const apiUrl = process.env.STUDNINGSBANKINN_API_URL + '/questions'
+    this.questionApi = makeAPI('questions')
+
     const id = this.$route.params.id
 
-    if (!isNaN(Number(id))) {
-      agent
-        .get(apiUrl + '/?id=' + id)
-        .then(res => {
-          if (res.body.length === 1) {
-            this.question = res.body[0]
-          } else {
-            this.error = true
-            this.message = 'Spurning fannst ekki'
-          }
-        })
-        .catch(e => {
-          this.error = true
-          this.message = 'Spurning fannst ekki'
-        })
-    }
+    this.questionApi
+      .get(id)
+      .then(question => {
+        this.question = question
+      })
   },
   methods: {
     save () {
+      this.working = true
       this.success = false
-      const apiUrl = process.env.STUDNINGSBANKINN_API_URL + '/questions'
-      const method = this.question.id ? 'put' : 'post'
+      this.error = false
 
-      agent(method, apiUrl)
-        .send(this.question)
-        .then(res => {
-          if (res.body.id > 0) {
+      this.questionApi
+        .upsert(this.question)
+        .then(question => {
+          if (question.id) {
             this.success = true
-            this.message = 'Aðgerð tókst'
+            this.message = 'Uppfærsla tókst'
+          } else {
+            this.error = true
+            this.message = 'Tókst ekki að vista'
           }
         })
-        .catch(e => {
+        .catch(() => {
           this.error = true
-          this.message = 'Ekki tókst að vista spurningu'
+          this.message = 'Villa kom upp við aðgerð'
+        })
+        .finally(() => {
+          this.working = false
         })
     },
     del () {
+      this.working = true
       this.success = false
-      const apiUrl = process.env.STUDNINGSBANKINN_API_URL + '/questions'
+      this.error = false
 
-      agent
-        .del(apiUrl)
-        .send(this.question)
-        .then(res => {
-          if (res.body.id > 0) {
+      this.questionApi
+        .delete(this.question)
+        .then(question => {
+          if (question.id) {
             this.success = true
-            this.message = 'Aðgerð tókst'
+            this.message = 'Uppfærsla tókst'
+            setTimeout(() => {
+              this.$router.push({
+                name: 'ListQuestion'
+              })
+            }, 2500)
+          } else {
+            this.error = true
+            this.message = 'Tókst ekki að eyða'
           }
         })
-        .catch(e => {
+        .catch(() => {
           this.error = true
-          this.message = 'Ekki tókst að eyða spurningu'
+          this.message = 'Villa kom upp við aðgerð'
+        })
+        .finally(() => {
+          this.working = false
         })
     }
   }

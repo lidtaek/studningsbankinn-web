@@ -16,101 +16,71 @@
         />
 
         <div class="columns">
-          <div class="field column is-12">
-            <label class="label">Nafn:</label>
-            <div class="control">
-              <input
-                v-model="place.name"
-                class="input"
-                type="text"
-              >
-            </div>
-          </div>
+          <Input
+            v-model="place.name"
+            :disabled="working"
+            label="Nafn"
+            class="column is-12"
+          />
         </div>
 
         <div class="columns">
-          <div class="field column is-12">
-            <label class="label">Lýsing:</label>
-            <div class="control">
-              <textarea
-                v-model="place.description"
-                class="textarea"
-                placeholder="Textarea"
-              />
-            </div>
-          </div>
+          <Textarea
+            v-model="place.description"
+            :disabled="working"
+            label="Lýsing"
+            class="column is-12"
+          />
         </div>
 
         <div class="columns">
-          <div class="field column is-6">
-            <label class="label">Vefsíða:</label>
-            <div class="control">
-              <input
-                v-model="place.website"
-                class="input"
-                type="text"
-              >
-            </div>
-          </div>
+          <Input
+            v-model="place.website"
+            :disabled="working"
+            label="Vefsíða"
+            class="column is-6"
+          />
 
-          <div class="field column is-6">
-            <label class="label">Sími:</label>
-            <div class="control">
-              <input
-                v-model="place.phone"
-                class="input"
-                type="text"
-              >
-            </div>
-          </div>
+          <Input
+            v-model="place.phone"
+            :disabled="working"
+            label="Símanúmer"
+            class="column is-6"
+          />
         </div>
 
         <div class="columns">
-          <div class="field column is-6">
-            <label class="label">Heimilisfang:</label>
-            <div class="control">
-              <input
-                v-model="place.address"
-                class="input"
-                type="text"
-              >
-            </div>
-          </div>
+          <Input
+            v-model="place.address"
+            :disabled="working"
+            label="Heimilisfang"
+            class="column is-6"
+          />
 
-          <div class="field column is-6">
-            <label class="label">Póstnúmer:</label>
-            <div class="control">
-              <input
-                v-model="place.postcode"
-                class="input"
-                type="text"
-              >
-            </div>
-          </div>
+          <Input
+            v-model="place.postcode"
+            :disabled="working"
+            label="Póstnúmer"
+            class="column is-6"
+          />
         </div>
 
         <div class="columns">
-          <div class="field column is-6">
-            <div class="control">
-              <button
-                class="button is-primary"
-                @click="save()"
-              >
-                Vista
-              </button>
-            </div>
-          </div>
+          <Button
+            :disabled="working"
+            label="Vista"
+            class="column is-6"
+            @click="save()"
+          />
 
-          <div class="field column is-6 has-text-right">
-            <div class="control">
-              <button
-                class="button is-danger is-light"
-                @click="del()"
-              >
-                Eyða
-              </button>
-            </div>
-          </div>
+          <Button
+            v-if="isEdit"
+            :disabled="working"
+            type="danger"
+            label="Eyða"
+            class="column is-6 has-text-right"
+            @click="del()"
+          />
         </div>
       </form>
     </section>
@@ -118,85 +88,98 @@
 </template>
 
 <script>
-import agent from 'superagent'
-import Hero from '../components/hero'
-import Notification from '../components/notification'
+import makeAPI from '../api'
+import Hero from '../_components/hero'
+import Notification from '../_components/notification'
+import Input from '../_components/input'
+import Textarea from '../_components/textarea'
+import Button from '../_components/button.vue'
+import EditMixin from '../_mixins/edit'
+
 export default {
   name: 'PlacesEdit',
   components: {
+    Input,
+    Textarea,
     Hero,
-    Notification
+    Notification,
+    Button
   },
+  mixins: [EditMixin],
   data () {
     return {
-      place: {},
-      message: '',
-      success: false,
-      error: false
-    }
-  },
-  computed: {
-    subtitle () {
-      const id = this.$route.params.id
-      return !isNaN(Number(id)) ? 'Breyta skráningu' : 'Skrá nýjan stað'
+      placesApi: {},
+      place: {}
     }
   },
   created () {
-    const apiUrl = process.env.STUDNINGSBANKINN_API_URL + '/places'
+    this.placesApi = makeAPI('places')
     const id = this.$route.params.id
+    this.working = true
 
-    if (!isNaN(Number(id))) {
-      agent
-        .get(apiUrl + '/?id=' + id)
-        .then(res => {
-          if (res.body.length === 1) {
-            this.place = res.body[0]
-          } else {
-            this.error = true
-            this.message = 'Staður fannst ekki'
-          }
-        })
-        .catch(e => {
-          this.error = true
-          this.message = 'Staður fannst ekki'
-        })
-    }
+    this.placesApi
+      .get(id)
+      .then(place => {
+        this.working = false
+        this.place = place
+      })
+      .catch(() => {
+        this.error = true
+        this.message = 'Villa kom upp við að sækja stað'
+      })
   },
   methods: {
     save () {
+      this.working = true
       this.success = false
-      const apiUrl = process.env.STUDNINGSBANKINN_API_URL + '/places'
-      const method = this.place.id ? 'put' : 'post'
+      this.error = false
 
-      agent(method, apiUrl)
-        .send(this.place)
-        .then(res => {
-          if (res.body.id > 0) {
+      this.placesApi
+        .upsert(this.place)
+        .then(place => {
+          if (place.id) {
             this.success = true
-            this.message = 'Aðgerð tókst'
+            this.message = 'Uppfærsla tókst'
+          } else {
+            this.error = true
+            this.message = 'Tókst ekki að vista'
           }
         })
-        .catch(e => {
+        .catch(() => {
           this.error = true
-          this.message = 'Ekki tókst að vista stað'
+          this.message = 'Villa kom upp við aðgerð'
+        })
+        .finally(() => {
+          this.working = false
         })
     },
     del () {
+      this.working = true
       this.success = false
-      const apiUrl = process.env.STUDNINGSBANKINN_API_URL + '/places'
+      this.error = false
 
-      agent
-        .del(apiUrl)
-        .send(this.place)
-        .then(res => {
-          if (res.body.id > 0) {
+      this.placesApi
+        .delete(this.place)
+        .then(place => {
+          if (place.id) {
             this.success = true
-            this.message = 'Aðgerð tókst'
+            this.message = 'Uppfærsla tókst'
+            setTimeout(() => {
+              this.$router.push({
+                name: 'ListPlaces'
+              })
+            }, 2500)
+          } else {
+            this.error = true
+            this.message = 'Tókst ekki að eyða'
           }
         })
-        .catch(e => {
+        .catch(() => {
           this.error = true
-          this.message = 'Ekki tókst að eyða staði'
+          this.message = 'Villa kom upp við aðgerð'
+        })
+        .finally(() => {
+          this.working = false
         })
     }
   }

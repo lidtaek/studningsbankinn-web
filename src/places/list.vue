@@ -51,8 +51,8 @@
 </template>
 
 <script>
-import agent from 'superagent'
-import Hero from '../components/hero'
+import Hero from '../_components/hero'
+import makeAPI from '../api'
 
 export default {
   name: 'PlacesList',
@@ -65,10 +65,10 @@ export default {
     }
   },
   created () {
-    const apiUrl = process.env.STUDNINGSBANKINN_API_URL
+    const placesApi = makeAPI('places')
 
-    agent.get(apiUrl + '/places').then(res => {
-      this.places = res.body
+    placesApi.getAll().then(places => {
+      this.places = places
     })
   },
   methods: {
