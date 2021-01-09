@@ -113,19 +113,19 @@ export default {
     }
   },
   created () {
+    this.working = true
     this.placesApi = makeAPI('places')
     const id = this.$route.params.id
-    this.working = true
 
     this.placesApi
       .get(id)
       .then(place => {
-        this.working = false
         this.place = place
+        this.working = false
       })
       .catch(() => {
         this.error = true
-        this.message = 'Villa kom upp við að sækja stað'
+        this.message = 'Villa kom upp. Staður fannst ekki.'
       })
   },
   methods: {

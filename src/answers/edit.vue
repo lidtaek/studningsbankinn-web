@@ -117,6 +117,7 @@ export default {
     }
   },
   created () {
+    this.working = true
     this.answersApi = makeAPI('answers')
     this.placesApi = makeAPI('places')
     this.questionsApi = makeAPI('questions')
@@ -128,11 +129,11 @@ export default {
       .get(id)
       .then(answer => {
         this.answer = answer
+        this.working = false
       })
       .catch(() => {
         this.error = true
-        this.message = 'Villa kom upp. Skráð svar fannst ekki'
-        this.working = true
+        this.message = 'Villa kom upp. Skráð svar fannst ekki.'
       })
 
     this.placesApi

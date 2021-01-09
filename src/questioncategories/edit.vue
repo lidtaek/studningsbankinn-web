@@ -69,13 +69,8 @@ export default {
       category: {}
     }
   },
-  computed: {
-    subtitle () {
-      const id = this.$route.params.id
-      return !isNaN(Number(id)) ? 'Breyta flokki' : 'Skrá nýjan flokk'
-    }
-  },
   created () {
+    this.working = true
     this.categoryApi = makeAPI('questioncategories')
     const id = this.$route.params.id
 
@@ -83,6 +78,11 @@ export default {
       .get(id)
       .then(category => {
         this.category = category
+        this.working = false
+      })
+      .catch(() => {
+        this.error = true
+        this.message = 'Villa kom upp. Spurningaflokkur fannst ekki.'
       })
   },
   methods: {

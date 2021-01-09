@@ -69,21 +69,20 @@ export default {
       question: {}
     }
   },
-  computed: {
-    subtitle () {
-      const id = this.$route.params.id
-      return !isNaN(Number(id)) ? 'Breyta spurningu' : 'Skrá nýja spurningu'
-    }
-  },
   created () {
+    this.working = true
     this.questionApi = makeAPI('questions')
-
     const id = this.$route.params.id
 
     this.questionApi
       .get(id)
       .then(question => {
         this.question = question
+        this.working = false
+      })
+      .catch(() => {
+        this.error = true
+        this.message = 'Villa kom upp. Spurning fannst ekki.'
       })
   },
   methods: {
