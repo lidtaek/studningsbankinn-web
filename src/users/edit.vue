@@ -52,6 +52,18 @@
           />
         </div>
 
+        <div
+          v-if="isEdit"
+          class="columns">
+          <Input
+            v-model="user.token"
+            :disabled="true"
+            label="Aðgangslykill"
+            class="column is-12"
+          />
+        </div>
+
+
         <div class="columns">
           <Button
             :disabled="working"
@@ -84,7 +96,7 @@ import Button from '../_components/button.vue'
 import EditMixin from '../_mixins/edit'
 
 export default {
-  name: 'PlacesEdit',
+  name: 'UsersEdit',
   components: {
     Input,
     Select,
@@ -167,7 +179,7 @@ export default {
       this.error = false
 
       this.usersApi
-        .delete(this.place)
+        .delete(this.user)
         .then(user => {
           if (user.id) {
             this.success = true

@@ -55,6 +55,16 @@ export default new Router({
       name: 'EditUsers',
       path: '/users/:id',
       component: () => import('./users/edit.vue')
+    },
+    {
+      name: 'ListQuestionnaire',
+      path: '/questionnaire',
+      component: () => import('./questionnaire/list.vue')
+    },
+    {
+      name: 'Questionnaire',
+      path: '/questionnaire/:token',
+      component: () => import('./questionnaire/questionnaire.vue')
     }
   ]
 })

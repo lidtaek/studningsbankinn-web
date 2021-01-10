@@ -21,12 +21,19 @@
           <span aria-hidden="true" />
         </a>
       </div>
+
+      <div class="navbar-menu">
+        <Login />
+      </div>
     </nav>
 
     <div class="container">
       <div class="columns">
         <div class="column is-3">
-          <aside class="menu">
+          <aside
+            v-if="loggedin"
+            class="menu"
+          >
             <p class="menu-label">
               Gagnagrunnur
             </p>
@@ -67,6 +74,12 @@
                 >
                   Svör
                 </router-link>
+                <router-link
+                  to="/questionnaire"
+                  active-class="is-active"
+                >
+                  Spurningalistar
+                </router-link>
               </li>
             </ul>
             <p class="menu-label">
@@ -83,6 +96,20 @@
               </li>
             </ul>
           </aside>
+
+          <aside
+            v-else
+            class="menu"
+          >
+            <p class="menu-label">
+              {{ user.placeName }}
+            </p>
+            <ul class="menu-list">
+              <li>
+                <a href="#">{{ user.name }}</a>
+              </li>
+            </ul>
+          </aside>
         </div>
 
         <div class="column is-9">
@@ -96,6 +123,32 @@
 </template>
 
 <script>
+import Login from './login'
+import makeAPI from './api'
+export default {
+  name: 'App',
+  components: { Login },
+  data () {
+    return {
+      loggedin: true,
+      user: {}
+    }
+  },
+  created () {
+    const userApi = makeAPI('users')
+    const isQuestionnaire = this.$route.name === 'Questionnaire'
+    const token = this.$route.params.token
+
+    if (isQuestionnaire) {
+      userApi
+        .get({ token })
+        .then(user => {
+          console.log(user)
+          this.user = user
+        })
+    }
+  }
+}
 
 </script>
 

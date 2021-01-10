@@ -1,6 +1,6 @@
 import agent from 'superagent'
 
-export default function makeAPI (entity) {
+export default function makeAPI (entity, token) {
   const url = process.env.STUDNINGSBANKINN_API_URL + '/' + entity
 
   return {

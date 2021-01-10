@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import agent from 'superagent'
+import makeAPI from '../api'
 import Hero from '../_components/hero'
 
 export default {
@@ -65,11 +65,13 @@ export default {
     }
   },
   created () {
-    const apiUrl = process.env.STUDNINGSBANKINN_API_URL
+    const categoriesApi = makeAPI('questioncategories')
 
-    agent.get(apiUrl + '/questioncategories').then(res => {
-      this.categories = res.body
-    })
+    categoriesApi
+      .getAll()
+      .then(categories => {
+        this.answers = categories
+      })
   },
   methods: {
     add () {
