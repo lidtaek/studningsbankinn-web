@@ -58,6 +58,7 @@ export default {
 
       return agent
         .post(url)
+        .withCredentials()
         .send({
           username: this.username,
           password: this.password
