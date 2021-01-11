@@ -31,7 +31,11 @@ export default {
       return agent
         .post(url)
         .withCredentials()
-        .finally(() => {
+        .then(() => {
+          this.$emit('logout')
+          sessionStorage.removeItem('STUDNINGSBANKINN_ADMIN')
+        })
+        .catch(() => {
           this.$emit('logout')
           sessionStorage.removeItem('STUDNINGSBANKINN_ADMIN')
         })
