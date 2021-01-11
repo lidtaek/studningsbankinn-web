@@ -21,7 +21,6 @@ export default {
         })
         .then(res => {
           const user = res.body
-          console.log('loginmixin', user)
           this.$emit('login', user)
           sessionStorage.setItem('STUDNINGSBANKINN_ADMIN', JSON.stringify(user))
         })

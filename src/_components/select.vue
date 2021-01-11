@@ -1,6 +1,11 @@
 <template>
   <div class="field">
-    <label class="label">{{ label }}:</label>
+    <label
+      v-if="label"
+      class="label"
+    >
+      {{ label }}:
+    </label>
     <div class="control">
       <div class="select is-fullwidth">
         <select
@@ -33,7 +38,8 @@ export default {
   props: {
     label: {
       type: String,
-      required: true
+      required: false,
+      default: ''
     },
     options: {
       type: Array,

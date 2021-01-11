@@ -4,7 +4,7 @@
       <div class="navbar-brand">
         <a
           class="navbar-item"
-          href="#"
+          href="/#/login"
         >
           STUÐNINGSBANKINN
         </a>
@@ -24,7 +24,7 @@
 
       <div class="navbar-menu">
         <LoginNavbar
-          v-if="!fullView"
+          v-if="!isQuestionnairePage && !isLoginPage"
           :user="user"
           @login="login"
           @logout="logout"
@@ -37,11 +37,11 @@
         class="columns"
       >
         <div
-          v-if="!fullView"
+          v-if="!((isLoginPage && !isLoggedIn) || isQuestionnairePage)"
           class="column is-3"
         >
           <aside
-            v-if="!loggedOut"
+            v-if="isLoggedIn"
             class="menu"
           >
             <p class="menu-label">
@@ -110,10 +110,17 @@
 
         <div
           class="column"
-          :class="{ 'is-9': !fullView , 'is-8 is-offset-2' : fullView }"
+          :class="{
+            'is-9': !isLoginPage && !isQuestionnairePage,
+            'is-8 is-offset-2' : isLoginPage && !isLoggedIn
+          }"
         >
           <main>
-            <router-view @login="login" />
+            <router-view
+              :user="user"
+              @login="login"
+              @logout="logout"
+            />
           </main>
         </div>
       </div>
@@ -136,12 +143,14 @@ export default {
     }
   },
   computed: {
-    loggedOut () {
-      return this.user.name === undefined
+    isLoggedIn () {
+      return this.user.name !== undefined
     },
-    fullView () {
-      const fullViewRoutes = ['Questionnaire', 'Login']
-      return fullViewRoutes.includes(this.$route.name)
+    isLoginPage () {
+      return this.$route.name === 'Login'
+    },
+    isQuestionnairePage () {
+      return this.$route.name === 'Questionnaire'
     }
   },
   mounted () {
@@ -156,9 +165,11 @@ export default {
   methods: {
     login (user) {
       this.user = user
+      this.$router.go()
     },
     logout () {
       this.user = {}
+      this.$router.go()
     }
   }
 }

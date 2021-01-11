@@ -1,11 +1,18 @@
 <template>
   <div class="field">
-    <label class="label">{{ label }}</label>
+    <label
+      v-if="label"
+      class="label"
+    >
+      {{ label }}:
+    </label>
     <div class="control">
       <input
         :value="value"
         :disabled="disabled"
+        :readonly="readonly"
         class="input"
+        :class="{ 'is-static': readonly }"
         type="text"
         @input="$emit('input', $event.target.value)"
       >
@@ -19,7 +26,8 @@ export default {
   props: {
     label: {
       type: String,
-      required: true
+      required: false,
+      default: ''
     },
     value: {
       type: [String, Number],
@@ -28,6 +36,10 @@ export default {
     disabled: {
       type: Boolean,
       default: true
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     }
   }
 }

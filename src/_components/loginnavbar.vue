@@ -98,11 +98,7 @@ export default {
   },
   methods: {
     loginhandler () {
-      console.log('loginhandler')
       this.login()
-        .then(user => {
-          this.$router.go()
-        })
         .catch(() => {
           this.error = true
           setTimeout(() => {

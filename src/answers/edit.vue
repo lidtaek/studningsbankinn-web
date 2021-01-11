@@ -102,10 +102,6 @@ export default {
       categories: [],
       answers: [
         {
-          value: undefined,
-          text: ''
-        },
-        {
           value: true,
           text: 'Já'
         },

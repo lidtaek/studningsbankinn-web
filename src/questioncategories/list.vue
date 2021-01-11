@@ -70,7 +70,7 @@ export default {
     categoriesApi
       .getAll()
       .then(categories => {
-        this.answers = categories
+        this.categories = categories
       })
   },
   methods: {

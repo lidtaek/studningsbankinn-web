@@ -63,7 +63,6 @@
           />
         </div>
 
-
         <div class="columns">
           <Button
             :disabled="working"
@@ -147,7 +146,7 @@ export default {
       this.working = true
       this.success = false
       this.error = false
-      console.log(this.user)
+
       this.usersApi
         .upsert(this.user)
         .then(user => {
