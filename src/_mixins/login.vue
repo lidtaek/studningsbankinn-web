@@ -28,12 +28,12 @@ export default {
     logout () {
       const url = process.env.STUDNINGSBANKINN_API_URL + '/logout'
 
+      sessionStorage.removeItem('STUDNINGSBANKINN_ADMIN')
       return agent
         .post(url)
         .withCredentials()
-        .then(res => {
+        .then(() => {
           this.$emit('logout')
-          sessionStorage.removeItem('STUDNINGSBANKINN_ADMIN')
         })
     }
   }
