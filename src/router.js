@@ -6,9 +6,14 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
+      name: 'Login',
+      path: '/login',
+      alias: '/',
+      component: () => import('./login/login.vue')
+    },
+    {
       name: 'ListPlaces',
       path: '/places',
-      alias: '/',
       component: () => import('./places/list.vue')
     },
     {

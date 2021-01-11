@@ -1,6 +1,6 @@
 import agent from 'superagent'
 
-export default function makeAPI (entity, token) {
+export default function makeAPI (entity) {
   const url = process.env.STUDNINGSBANKINN_API_URL + '/' + entity
 
   return {
@@ -11,6 +11,7 @@ export default function makeAPI (entity, token) {
 
       return agent
         .get(url)
+        .withCredentials()
         .query({ id })
         .then(res => {
           if (res.body.length === 1) {
@@ -23,6 +24,7 @@ export default function makeAPI (entity, token) {
     getAll () {
       return agent
         .get(url)
+        .withCredentials()
         .then(res => res.body)
     },
     upsert (data) {
@@ -31,18 +33,21 @@ export default function makeAPI (entity, token) {
       if (hasId) {
         return agent
           .put(url)
+          .withCredentials()
           .send(data)
           .then(res => res.body)
       }
 
       return agent
         .post(url)
+        .withCredentials()
         .send(data)
         .then(res => res.body)
     },
     delete (data) {
       return agent
         .delete(url)
+        .withCredentials()
         .send(data)
         .then(res => res.body)
     }

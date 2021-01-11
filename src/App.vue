@@ -23,15 +23,25 @@
       </div>
 
       <div class="navbar-menu">
-        <Login />
+        <LoginNavbar
+          v-if="!fullView"
+          :user="user"
+          @login="login"
+          @logout="logout"
+        />
       </div>
     </nav>
 
     <div class="container">
-      <div class="columns">
-        <div class="column is-3">
+      <div
+        class="columns"
+      >
+        <div
+          v-if="!fullView"
+          class="column is-3"
+        >
           <aside
-            v-if="loggedin"
+            v-if="!loggedOut"
             class="menu"
           >
             <p class="menu-label">
@@ -96,25 +106,14 @@
               </li>
             </ul>
           </aside>
-
-          <aside
-            v-else
-            class="menu"
-          >
-            <p class="menu-label">
-              {{ user.placeName }}
-            </p>
-            <ul class="menu-list">
-              <li>
-                <a href="#">{{ user.name }}</a>
-              </li>
-            </ul>
-          </aside>
         </div>
 
-        <div class="column is-9">
+        <div
+          class="column"
+          :class="{ 'is-9': !fullView , 'is-8 is-offset-2' : fullView }"
+        >
           <main>
-            <router-view />
+            <router-view @login="login" />
           </main>
         </div>
       </div>
@@ -123,29 +122,43 @@
 </template>
 
 <script>
-import Login from './login'
-import makeAPI from './api'
+import getUser from './getUser'
+import EditMixin from './_mixins/edit'
+import LoginNavbar from './_components/loginnavbar'
+
 export default {
   name: 'App',
-  components: { Login },
+  components: { LoginNavbar },
+  mixins: [EditMixin],
   data () {
     return {
-      loggedin: true,
       user: {}
     }
   },
-  created () {
-    const userApi = makeAPI('users')
-    const isQuestionnaire = this.$route.name === 'Questionnaire'
-    const token = this.$route.params.token
-
-    if (isQuestionnaire) {
-      userApi
-        .get({ token })
-        .then(user => {
-          console.log(user)
-          this.user = user
-        })
+  computed: {
+    loggedOut () {
+      return this.user.name === undefined
+    },
+    fullView () {
+      const fullViewRoutes = ['Questionnaire', 'Login']
+      return fullViewRoutes.includes(this.$route.name)
+    }
+  },
+  mounted () {
+    getUser()
+      .then(user => {
+        this.user = user
+      })
+      .catch(e => {
+        this.user = {}
+      })
+  },
+  methods: {
+    login (user) {
+      this.user = user
+    },
+    logout () {
+      this.user = {}
     }
   }
 }
