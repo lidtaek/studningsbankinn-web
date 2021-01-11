@@ -28,7 +28,7 @@
         </thead>
         <tbody>
           <tr
-            v-for="category in categories"
+            v-for="category in questionCategories"
             :key="category.id"
           >
             <td>{{ category.id }}</td>
@@ -61,16 +61,16 @@ export default {
   },
   data () {
     return {
-      categories: []
+      questionCategories: []
     }
   },
   created () {
-    const categoriesApi = makeAPI('questioncategories')
+    const questionCategoriesApi = makeAPI('questioncategories')
 
-    categoriesApi
+    questionCategoriesApi
       .getAll()
       .then(categories => {
-        this.categories = categories
+        this.questionCategories = categories
       })
   },
   methods: {

@@ -65,16 +65,16 @@ export default {
   mixins: [EditMixin],
   data () {
     return {
-      categoryApi: {},
+      questionCategoriesApi: {},
       category: {}
     }
   },
   created () {
     this.working = true
-    this.categoryApi = makeAPI('questioncategories')
+    this.questionCategoriesApi = makeAPI('questioncategories')
     const id = this.$route.params.id
 
-    this.categoryApi
+    this.questionCategoriesApi
       .get(id)
       .then(category => {
         this.category = category
@@ -91,7 +91,7 @@ export default {
       this.success = false
       this.error = false
 
-      this.categoryApi
+      this.questionCategoriesApi
         .upsert(this.category)
         .then(category => {
           if (category.id) {
@@ -115,7 +115,7 @@ export default {
       this.success = false
       this.error = false
 
-      this.categoryApi
+      this.questionCategoriesApi
         .delete(this.category)
         .then(category => {
           if (category.id) {

@@ -25,8 +25,8 @@
           />
 
           <Select
-            v-model="answer.categoryId"
-            :options="categories"
+            v-model="answer.questionCategoryId"
+            :options="questionCategories"
             :disabled="working"
             label="Flokkur"
             class="column is-3"
@@ -95,11 +95,11 @@ export default {
       answersApi: {},
       placesApi: {},
       questionsApi: {},
-      categoriesApi: {},
+      questionCategoriesApi: {},
       answer: {},
       places: [],
       questions: [],
-      categories: [],
+      questionCategories: [],
       answers: [
         {
           value: true,
@@ -117,7 +117,7 @@ export default {
     this.answersApi = makeAPI('answers')
     this.placesApi = makeAPI('places')
     this.questionsApi = makeAPI('questions')
-    this.categoriesApi = makeAPI('questioncategories')
+    this.questionCategoriesApi = makeAPI('questioncategories')
 
     const id = this.$route.params.id
 
@@ -158,10 +158,10 @@ export default {
         this.message = 'Villa kom upp við að sækja spurningar'
       })
 
-    this.categoriesApi
+    this.questionCategoriesApi
       .getAll()
       .then(categories => {
-        this.categories = categories.map(category => ({
+        this.questionCategories = categories.map(category => ({
           value: category.id,
           text: category.name
         }))

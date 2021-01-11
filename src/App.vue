@@ -42,7 +42,7 @@
         >
           <aside
             v-if="isLoggedIn"
-            class="menu"
+            class="menu is-hidden-mobile"
           >
             <p class="menu-label">
               Gagnagrunnur
