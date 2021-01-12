@@ -5,10 +5,7 @@
       :subtitle="subtitle"
     />
     <section class="box">
-      <form
-        class="card-content"
-        @submit.prevent
-      >
+      <form @submit.prevent>
         <Notification
           :message="message"
           :success="success"
@@ -20,7 +17,15 @@
             v-model="place.name"
             :disabled="working"
             label="Nafn"
-            class="column is-12"
+            class="column is-8"
+          />
+
+          <Select
+            v-model="place.categoryId"
+            :disabled="working"
+            :options="placeCategories"
+            label="Flokkur"
+            class="column is-4"
           />
         </div>
 
@@ -92,6 +97,7 @@ import makeAPI from '../api'
 import Hero from '../_components/hero'
 import Notification from '../_components/notification'
 import Input from '../_components/input'
+import Select from '../_components/select'
 import Textarea from '../_components/textarea'
 import Button from '../_components/button.vue'
 import EditMixin from '../_mixins/edit'
@@ -100,6 +106,7 @@ export default {
   name: 'PlacesEdit',
   components: {
     Input,
+    Select,
     Textarea,
     Hero,
     Notification,
@@ -109,12 +116,15 @@ export default {
   data () {
     return {
       placesApi: {},
-      place: {}
+      placeCategoriesApi: {},
+      place: {},
+      placeCategories: []
     }
   },
   created () {
     this.working = true
     this.placesApi = makeAPI('places')
+    this.placeCategoriesApi = makeAPI('placecategories')
     const id = this.$route.params.id
 
     this.placesApi
@@ -126,6 +136,19 @@ export default {
       .catch(() => {
         this.error = true
         this.message = 'Villa kom upp. Staður fannst ekki.'
+      })
+
+    this.placeCategoriesApi
+      .getAll()
+      .then(categories => {
+        this.placeCategories = categories.map(category => ({
+          value: category.id,
+          text: category.name
+        }))
+      })
+      .catch(e => {
+        this.error = true
+        this.message = 'Villa kom upp við að sækja staðarflokka'
       })
   },
   methods: {

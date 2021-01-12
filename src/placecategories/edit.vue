@@ -1,7 +1,7 @@
 <template>
   <div>
     <Hero
-      title="Spurningar"
+      title="Staðarflokkar"
       :subtitle="subtitle"
     />
     <section class="box">
@@ -14,10 +14,10 @@
 
         <div class="columns">
           <Input
-            v-model="question.question"
+            v-model="category.name"
             :disabled="working"
+            label="Heiti"
             class="column is-12"
-            label="Spurning"
           />
         </div>
 
@@ -52,7 +52,7 @@ import Button from '../_components/button'
 import EditMixin from '../_mixins/edit'
 
 export default {
-  name: 'QuestionsEdit',
+  name: 'PlaceCategoriesEdit',
   components: {
     Input,
     Button,
@@ -62,24 +62,24 @@ export default {
   mixins: [EditMixin],
   data () {
     return {
-      questionApi: {},
-      question: {}
+      placeCategoriesApi: {},
+      category: {}
     }
   },
   created () {
     this.working = true
-    this.questionApi = makeAPI('questions')
+    this.placeCategoriesApi = makeAPI('placecategories')
     const id = this.$route.params.id
 
-    this.questionApi
+    this.placeCategoriesApi
       .get(id)
-      .then(question => {
-        this.question = question
+      .then(category => {
+        this.category = category
         this.working = false
       })
       .catch(() => {
         this.error = true
-        this.message = 'Villa kom upp. Spurning fannst ekki.'
+        this.message = 'Villa kom upp. Spurningaflokkur fannst ekki.'
       })
   },
   methods: {
@@ -88,10 +88,10 @@ export default {
       this.success = false
       this.error = false
 
-      this.questionApi
-        .upsert(this.question)
-        .then(question => {
-          if (question.id) {
+      this.placeCategoriesApi
+        .upsert(this.category)
+        .then(category => {
+          if (category.id) {
             this.success = true
             this.message = 'Uppfærsla tókst'
           } else {
@@ -112,15 +112,15 @@ export default {
       this.success = false
       this.error = false
 
-      this.questionApi
-        .delete(this.question)
-        .then(question => {
-          if (question.id) {
+      this.placeCategoriesApi
+        .delete(this.category)
+        .then(category => {
+          if (category.id) {
             this.success = true
             this.message = 'Uppfærsla tókst'
             setTimeout(() => {
               this.$router.push({
-                name: 'ListQuestion'
+                name: 'ListPlaceCategories'
               })
             }, 2500)
           } else {

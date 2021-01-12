@@ -5,10 +5,7 @@
       :subtitle="subtitle"
     />
     <section class="box">
-      <form
-        class="card-content"
-        @submit.prevent
-      >
+      <form @submit.prevent>
         <Notification
           :message="message"
           :success="success"
@@ -48,7 +45,15 @@
             :disabled="working"
             :options="places"
             label="Staður"
-            class="column is-12"
+            class="column is-7"
+          />
+
+          <Select
+            v-model="user.placeCategoryId"
+            :disabled="working"
+            :options="placeCategories"
+            label="Flokkur"
+            class="column is-5"
           />
         </div>
 
@@ -108,13 +113,17 @@ export default {
     return {
       usersApi: {},
       user: {},
-      places: []
+      placesApi: {},
+      places: [],
+      placeCategoriesApi: {},
+      placeCategories: []
     }
   },
   created () {
     this.working = true
     this.usersApi = makeAPI('users')
     this.placesApi = makeAPI('places')
+    this.placeCategoriesApi = makeAPI('placecategories')
     const id = this.$route.params.id
 
     this.usersApi
@@ -132,6 +141,19 @@ export default {
       .getAll()
       .then(places => {
         this.places = places.map(place => ({
+          value: place.id,
+          text: place.name
+        }))
+      })
+      .catch(e => {
+        this.error = true
+        this.message = 'Villa kom upp við að sækja staði'
+      })
+
+    this.placeCategoriesApi
+      .getAll()
+      .then(categories => {
+        this.placeCategories = categories.map(place => ({
           value: place.id,
           text: place.name
         }))

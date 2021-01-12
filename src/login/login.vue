@@ -3,7 +3,7 @@
     class="column"
     :class="{
       'is-8 is-offset-2': user.name === undefined,
-      'is-9': user.name !== undefined
+      'is-12': user.name !== undefined
     }"
   >
     <div class="box">

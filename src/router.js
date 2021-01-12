@@ -70,6 +70,16 @@ export default new Router({
       name: 'Questionnaire',
       path: '/questionnaire/:token',
       component: () => import('./questionnaire/questionnaire.vue')
+    },
+    {
+      name: 'ListPlaceCategories',
+      path: '/placecategories',
+      component: () => import('./placecategories/list.vue')
+    },
+    {
+      name: 'EditPlaceCategories',
+      path: '/placecategories/:id',
+      component: () => import('./placecategories/edit.vue')
     }
   ]
 })

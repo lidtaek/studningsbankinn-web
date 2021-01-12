@@ -5,10 +5,7 @@
       subtitle="Spurningalisti"
     />
     <section class="box">
-      <form
-        class="card-content"
-        @submit.prevent
-      >
+      <form @submit.prevent>
         <Notification
           :message="message"
           :success="success"

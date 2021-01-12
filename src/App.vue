@@ -39,6 +39,14 @@
           </router-link>
 
           <router-link
+            to="/placecategories"
+            class="navbar-item"
+            active-class="is-active"
+          >
+            Staðarflokkar
+          </router-link>
+
+          <router-link
             to="/questions"
             class="navbar-item"
             active-class="is-active"
