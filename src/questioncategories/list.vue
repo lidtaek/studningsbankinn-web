@@ -4,7 +4,7 @@
       title="Spurningaflokkar"
       subtitle="Listi yfir allar skráða flokka"
     />
-    <section class="card">
+    <section class="box">
       <table class="table is-fullwidth">
         <thead>
           <tr>

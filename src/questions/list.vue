@@ -4,7 +4,7 @@
       title="Spurningar"
       subtitle="Listi yfir allar skráðar spurningar"
     />
-    <section class="card">
+    <section class="box">
       <table class="table is-fullwidth">
         <thead>
           <tr>

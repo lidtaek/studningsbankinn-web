@@ -12,9 +12,11 @@
         <a
           role="button"
           class="navbar-burger"
+          :class="{ 'is-active': burger }"
           aria-label="menu"
           aria-expanded="false"
-          data-target="navbarBasicExample"
+          data-target="navbar"
+          @click="burger = !burger"
         >
           <span aria-hidden="true" />
           <span aria-hidden="true" />
@@ -22,7 +24,60 @@
         </a>
       </div>
 
-      <div class="navbar-menu">
+      <div
+        id="navbar"
+        class="navbar-menu"
+        :class="{'is-active': burger }"
+      >
+        <div class="navbar-start">
+          <router-link
+            to="/places"
+            class="navbar-item"
+            active-class="is-active"
+          >
+            Staðir
+          </router-link>
+
+          <router-link
+            to="/questions"
+            class="navbar-item"
+            active-class="is-active"
+          >
+            Spurningar
+          </router-link>
+
+          <router-link
+            to="/questioncategories"
+            class="navbar-item"
+            active-class="is-active"
+          >
+            Spurningaflokkar
+          </router-link>
+
+          <router-link
+            to="/answers"
+            class="navbar-item"
+            active-class="is-active"
+          >
+            Svör
+          </router-link>
+
+          <router-link
+            to="/questionnaire"
+            class="navbar-item"
+            active-class="is-active"
+          >
+            Spurningalistar
+          </router-link>
+          <router-link
+            to="/users"
+            class="navbar-item"
+            active-class="is-active"
+          >
+            Notendur
+          </router-link>
+        </div>
+        <hr class="navbar-divider">
         <LoginNavbar
           v-if="!isQuestionnairePage && !isLoginPage"
           :user="user"
@@ -33,88 +88,8 @@
     </nav>
 
     <div class="container">
-      <div
-        class="columns"
-      >
-        <div
-          v-if="!((isLoginPage && !isLoggedIn) || isQuestionnairePage)"
-          class="column is-3"
-        >
-          <aside
-            v-if="isLoggedIn"
-            class="menu is-hidden-mobile"
-          >
-            <p class="menu-label">
-              Gagnagrunnur
-            </p>
-            <ul class="menu-list">
-              <li>
-                <router-link
-                  to="/places"
-                  active-class="is-active"
-                >
-                  Staðir
-                </router-link>
-              </li>
-              <li>
-                <router-link
-                  to="/questions"
-                  active-class="is-active"
-                >
-                  Spurningar
-                </router-link>
-              </li>
-              <li>
-                <router-link
-                  to="/questioncategories"
-                  active-class="is-active"
-                >
-                  Spurningaflokkar
-                </router-link>
-              </li>
-            </ul>
-            <p class="menu-label">
-              Kerfi
-            </p>
-            <ul class="menu-list">
-              <li>
-                <router-link
-                  to="/answers"
-                  active-class="is-active"
-                >
-                  Svör
-                </router-link>
-                <router-link
-                  to="/questionnaire"
-                  active-class="is-active"
-                >
-                  Spurningalistar
-                </router-link>
-              </li>
-            </ul>
-            <p class="menu-label">
-              Notendur
-            </p>
-            <ul class="menu-list">
-              <li>
-                <router-link
-                  to="/users"
-                  active-class="is-active"
-                >
-                  Notendur
-                </router-link>
-              </li>
-            </ul>
-          </aside>
-        </div>
-
-        <div
-          class="column"
-          :class="{
-            'is-9': !isLoginPage && !isQuestionnairePage,
-            'is-8 is-offset-2' : isLoginPage && !isLoggedIn
-          }"
-        >
+      <div class="columns">
+        <div class="column is-8 is-offset-2">
           <main>
             <router-view
               :user="user"
@@ -139,7 +114,8 @@ export default {
   mixins: [EditMixin],
   data () {
     return {
-      user: {}
+      user: {},
+      burger: false
     }
   },
   computed: {

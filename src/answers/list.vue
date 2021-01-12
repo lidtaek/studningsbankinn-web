@@ -4,7 +4,7 @@
       title="Svör"
       subtitle="Listi yfir öll skráð svör"
     />
-    <section class="card">
+    <section class="box">
       <table class="table is-fullwidth">
         <thead>
           <tr>

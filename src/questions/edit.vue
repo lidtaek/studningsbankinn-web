@@ -4,7 +4,7 @@
       title="Spurningar"
       :subtitle="subtitle"
     />
-    <section class="card">
+    <section class="box">
       <form
         class="card-content"
         @submit.prevent

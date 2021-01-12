@@ -4,7 +4,7 @@
       title="Notendur"
       subtitle="Listi yfir alla skráða notendur"
     />
-    <section class="card">
+    <section class="box">
       <table class="table is-fullwidth">
         <thead>
           <tr>

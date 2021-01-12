@@ -4,7 +4,7 @@
       title="Spurningalistar"
       subtitle="Listi yfir spurningalista"
     />
-    <section class="card">
+    <section class="box">
       <table class="table is-fullwidth">
         <thead>
           <tr>

@@ -4,7 +4,7 @@
       title="Staðir"
       subtitle="Listi yfir alla skráða staði"
     />
-    <section class="card">
+    <section class="box">
       <table class="table is-fullwidth">
         <thead>
           <tr>
