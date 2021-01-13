@@ -63,6 +63,14 @@
           </router-link>
 
           <router-link
+            to="/questionnaires"
+            class="navbar-item"
+            active-class="is-active"
+          >
+            Spurningalistar
+          </router-link>
+
+          <router-link
             to="/answers"
             class="navbar-item"
             active-class="is-active"
@@ -70,13 +78,6 @@
             Svör
           </router-link>
 
-          <router-link
-            to="/questionnaire"
-            class="navbar-item"
-            active-class="is-active"
-          >
-            Spurningalistar
-          </router-link>
           <router-link
             to="/users"
             class="navbar-item"

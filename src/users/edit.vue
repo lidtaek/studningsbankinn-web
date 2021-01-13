@@ -129,7 +129,7 @@ export default {
     const id = this.$route.params.id
 
     this.usersApi
-      .get(id)
+      .getSingle(id)
       .then(user => {
         this.user = user
         this.working = false

@@ -62,14 +62,19 @@ export default new Router({
       component: () => import('./users/edit.vue')
     },
     {
-      name: 'ListQuestionnaire',
-      path: '/questionnaire',
-      component: () => import('./questionnaire/list.vue')
+      name: 'ListQuestionnaires',
+      path: '/questionnaires',
+      component: () => import('./questionnaires/list.vue')
     },
     {
-      name: 'Questionnaire',
+      name: 'EditQuestionnaires',
+      path: '/questionnaires/:id',
+      component: () => import('./questionnaires/edit.vue')
+    },
+    {
+      name: 'ViewQuestionnaire',
       path: '/questionnaire/:token',
-      component: () => import('./questionnaire/questionnaire.vue')
+      component: () => import('./questionnaires/questionnaire.vue')
     },
     {
       name: 'ListPlaceCategories',

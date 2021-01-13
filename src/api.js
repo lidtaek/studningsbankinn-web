@@ -13,13 +13,16 @@ export default function makeAPI (entity) {
         .get(url)
         .withCredentials()
         .query({ id })
-        .then(res => {
-          if (res.body.length === 1) {
-            return res.body[0]
-          } else {
-            throw new Error('API should only find one')
-          }
-        })
+        .then(res => res.body)
+    },
+    getSingle (id) {
+      return this.get(id).then(data => {
+        if (data.length === 1) {
+          return data[0]
+        } else {
+          throw new Error('API should only find one')
+        }
+      })
     },
     getAll () {
       return agent
@@ -27,22 +30,28 @@ export default function makeAPI (entity) {
         .withCredentials()
         .then(res => res.body)
     },
-    upsert (data) {
-      const hasId = Boolean(data.id)
-
-      if (hasId) {
-        return agent
-          .put(url)
-          .withCredentials()
-          .send(data)
-          .then(res => res.body)
-      }
-
+    insert (data) {
       return agent
         .post(url)
         .withCredentials()
         .send(data)
         .then(res => res.body)
+    },
+    update (data) {
+      return agent
+        .put(url)
+        .withCredentials()
+        .send(data)
+        .then(res => res.body)
+    },
+    upsert (data) {
+      const hasId = Boolean(data.id)
+
+      if (hasId) {
+        this.update(data)
+      }
+
+      return this.insert(data)
     },
     delete (data) {
       return agent

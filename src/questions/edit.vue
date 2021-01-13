@@ -85,7 +85,7 @@ export default {
     const id = this.$route.params.id
 
     this.questionsApi
-      .get(id)
+      .getSingle(id)
       .then(question => {
         this.question = question
         this.working = false

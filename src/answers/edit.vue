@@ -119,7 +119,7 @@ export default {
     const id = this.$route.params.id
 
     this.answersApi
-      .get(id)
+      .getSingle(id)
       .then((answer) => {
         this.answer = answer
         this.working = false

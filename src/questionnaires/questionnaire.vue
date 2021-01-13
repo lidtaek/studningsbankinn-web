@@ -23,6 +23,7 @@
             :readonly="true"
             class="column is-6"
           />
+
           <Select
             v-model="answer.answer"
             :options="answers"
@@ -97,7 +98,6 @@ export default {
   },
   methods: {
     save (answer) {
-      console.log('hingað')
       this.working = true
       this.success = false
       this.error = false

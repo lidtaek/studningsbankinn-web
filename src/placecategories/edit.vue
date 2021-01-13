@@ -72,7 +72,7 @@ export default {
     const id = this.$route.params.id
 
     this.placeCategoriesApi
-      .get(id)
+      .getSingle(id)
       .then(category => {
         this.category = category
         this.working = false

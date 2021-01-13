@@ -128,7 +128,7 @@ export default {
     const id = this.$route.params.id
 
     this.placesApi
-      .get(id)
+      .getSingle(id)
       .then(place => {
         this.place = place
         this.working = false

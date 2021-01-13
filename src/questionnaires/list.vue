@@ -10,27 +10,23 @@
           <tr>
             <th>#</th>
             <th>Nafn</th>
-            <th>Staður</th>
-            <th class="has-text-right">
-              &nbsp;
-            </th>
+            <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            v-for="user in users"
-            :key="user.id"
+            v-for="category in placeCategories"
+            :key="category.id"
           >
-            <td>{{ user.id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.placeName }}</td>
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
             <td class="has-text-right">
               <button
                 class="button is-small"
-                @click="view(user.token)"
+                @click="edit(category.id)"
               >
                 <span class="icon">
-                  <i class="fas fa-eye" />
+                  <i class="fas fa-pen" />
                 </span>
               </button>
             </td>
@@ -52,21 +48,21 @@ export default {
   },
   data () {
     return {
-      users: []
+      placeCategories: []
     }
   },
   created () {
-    const usersApi = makeAPI('users')
+    const placeCategories = makeAPI('placecategories')
 
-    usersApi.getAll().then(users => {
-      this.users = users
+    placeCategories.getAll().then(categories => {
+      this.placeCategories = categories
     })
   },
   methods: {
-    view (token) {
+    edit (id) {
       this.$router.push({
-        name: 'Questionnaire',
-        params: { token }
+        name: 'EditQuestionnaires',
+        params: { id }
       })
     }
   }
