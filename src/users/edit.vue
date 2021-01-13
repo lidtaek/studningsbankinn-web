@@ -1,8 +1,9 @@
 <template>
   <div>
     <Hero
-      title="Staðir"
+      title="Notendur"
       :subtitle="subtitle"
+      :x="true"
     />
     <section class="box">
       <form @submit.prevent>

@@ -3,6 +3,7 @@
     <Hero
       title="Staðarflokkar"
       :subtitle="subtitle"
+      :x="true"
     />
     <section class="box">
       <form @submit.prevent>

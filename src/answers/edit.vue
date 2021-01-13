@@ -3,6 +3,7 @@
     <Hero
       :title="title"
       subtitle="Svör"
+      :x="true"
     />
     <section class="box">
       <form @submit.prevent>

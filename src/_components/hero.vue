@@ -2,6 +2,11 @@
   <section class="hero is-primary">
     <div class="hero-body">
       <div class="container">
+        <button
+          v-if="x"
+          class="delete is-large"
+          @click="close"
+        />
         <h1 class="title">
           {{ title }}
         </h1>
@@ -28,7 +33,25 @@ export default {
       type: String,
       required: false,
       default: undefined
+    },
+    x: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
+  methods: {
+    close () {
+      this.$router.go(-1)
     }
   }
 }
 </script>
+
+<style scoped>
+button.delete {
+  position: absolute;
+  right : 0;
+  top: -30px;
+}
+</style>

@@ -8,13 +8,19 @@
       <table class="table is-fullwidth">
         <thead>
           <tr>
-            <th>
+            <th width="9%">
               #
             </th>
-            <th>
+            <th width="40%">
               Nafn
             </th>
-            <th class="has-text-right">
+            <th width="60%">
+              Réttindi
+            </th>
+            <th
+              width="1%"
+              class="has-text-right"
+            >
               <button
                 class="button is-small"
                 @click="add()"
@@ -33,6 +39,7 @@
           >
             <td>{{ user.id }}</td>
             <td>{{ user.name }}</td>
+            <td>{{ userType(user) }}</td>
             <td class="has-text-right">
               <button
                 class="button is-small"
@@ -72,6 +79,19 @@ export default {
     })
   },
   methods: {
+    userType (user) {
+      if (user.isAdmin) {
+        return 'Stjórnandi'
+      }
+
+      if (user.isOrganization) {
+        return 'Samtök'
+      }
+
+      if (user.isPlace) {
+        return 'Staður'
+      }
+    },
     add () {
       this.$router.push({
         name: 'EditUsers',

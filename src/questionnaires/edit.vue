@@ -3,6 +3,7 @@
     <Hero
       :title="placeCategory.name || ''"
       subtitle="Spurningalisti"
+      :x="true"
     />
     <section class="box">
       <form @submit.prevent>
