@@ -1,8 +1,8 @@
 <template>
   <div>
     <Hero
-      :title="placeCategory.name || ''"
-      subtitle="Spurningalisti"
+      title="Spurningalisti"
+      :subtitle="placeCategory.name"
     />
     <section class="box">
       <form @submit.prevent>
