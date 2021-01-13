@@ -4,19 +4,18 @@ export default function makeAPI (entity) {
   const url = process.env.STUDNINGSBANKINN_API_URL + '/' + entity
 
   return {
-    get (id) {
-      if (isNaN(Number(id))) {
-        return Promise.resolve({})
-      }
-
+    get (options) {
       return agent
         .get(url)
         .withCredentials()
-        .query({ id })
+        .query(options)
         .then(res => res.body)
     },
     getSingle (id) {
-      return this.get(id).then(data => {
+      if (isNaN(Number(id))) {
+        return Promise.resolve({})
+      }
+      return this.get({ id }).then(data => {
         if (data.length === 1) {
           return data[0]
         } else {

@@ -1,8 +1,8 @@
 <template>
   <div>
     <Hero
-      title="Spurningalisti"
-      :subtitle="placeCategory.name"
+      :title="placeCategory.name || ''"
+      subtitle="Spurningalisti"
     />
     <section class="box">
       <form @submit.prevent>
@@ -13,7 +13,9 @@
         />
       </form>
 
-      <table class="table is-fullwidth">
+      <table
+        class="table is-fullwidth"
+      >
         <thead>
           <tr>
             <th>Spurning</th>
@@ -31,23 +33,19 @@
             <td>{{ question.question }}</td>
             <td class="is-hidden-mobile">{{ question.categoryName }}</td>
             <td class="has-text-centered">
-              <div class="field">
-                <input
-                  :id="'q' + question.id"
-                  v-model="questionnaire.questions"
-                  :value="question.id"
-                  type="checkbox"
-                  class="switch is-rounded"
-                >
-                <label :for="'q' + question.id" />
-              </div>
+              <CheckboxSwitch
+                :id="'q-' + question.id"
+                v-model="questionnaire.questions"
+                :value="question.id"
+                :disabled="error"
+              />
             </td>
           </tr>
         </tbody>
       </table>
 
       <Button
-        :disabled="false"
+        :disabled="error"
         label="Vista"
         @click="save"
       />
@@ -60,12 +58,14 @@ import makeAPI from '../api'
 import Hero from '../_components/hero'
 import Notification from '../_components/notification'
 import Button from '../_components/button'
+import CheckboxSwitch from '../_components/checkboxswitch'
 import EditMixin from '../_mixins/edit'
 
 export default {
   name: 'QuestionnairesEdit',
   components: {
     Button,
+    CheckboxSwitch,
     Hero,
     Notification
   },
@@ -79,33 +79,22 @@ export default {
       },
       questionsApi: {},
       questions: [],
-      placeCategoriesApi: {},
       placeCategory: {}
     }
   },
   created () {
     this.working = true
-    this.placeCategoriesApi = makeAPI('placecategories')
     this.questionsApi = makeAPI('questions')
     this.questionnairesApi = makeAPI('questionnaires')
+    this.placeCategoriesApi = makeAPI('placecategories')
 
     const id = this.$route.params.id
 
     this.questionnairesApi
-      .get(id)
+      .get({ placeCategoryId: id })
       .then(questionnaires => {
         this.questionnaire.placeCategoryId = id
         this.questionnaire.questions = questionnaires.map(qn => qn.questionId)
-      })
-
-    this.placeCategoriesApi
-      .getSingle(id)
-      .then(category => {
-        this.placeCategory = category
-      })
-      .catch(() => {
-        this.error = true
-        this.message = 'Villa kom upp. Flokkur fannst ekki.'
       })
 
     this.questionsApi
@@ -117,6 +106,16 @@ export default {
       .catch(() => {
         this.error = true
         this.message = 'Villa kom upp við að sækja spurningar.'
+      })
+
+    this.placeCategoriesApi
+      .getSingle(id)
+      .then(category => {
+        this.placeCategory = category
+      })
+      .catch(e => {
+        this.error = true
+        this.message = 'Spurningalisti fannst ekki.'
       })
   },
   methods: {
@@ -147,7 +146,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-@import '../../node_modules/bulma-switch/dist/css/bulma-switch.min.css';
-</style>

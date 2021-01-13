@@ -14,33 +14,22 @@
             <th>
               Staður
             </th>
-            <th>
-              Spurning
-            </th>
             <th class="has-text-right">
-              <button
-                class="button is-small"
-                @click="add()"
-              >
-                <span class="icon">
-                  <i class="fas fa-plus" />
-                </span>
-              </button>
+              &nbsp;
             </th>
           </tr>
         </thead>
         <tbody>
           <tr
-            v-for="answer in answers"
-            :key="answer.id"
+            v-for="place in places"
+            :key="place.id"
           >
-            <td>{{ answer.id }}</td>
-            <td>{{ answer.placeName }}</td>
-            <td>{{ answer.question }}</td>
+            <td>{{ place.id }}</td>
+            <td>{{ place.name }}</td>
             <td class="has-text-right">
               <button
                 class="button is-small"
-                @click="edit(answer.id)"
+                @click="edit(place.id)"
               >
                 <span class="icon">
                   <i class="fas fa-pen" />
@@ -65,25 +54,19 @@ export default {
   },
   data () {
     return {
-      answers: []
+      places: []
     }
   },
   created () {
-    const answersApi = makeAPI('answers')
+    const placesAPI = makeAPI('places')
 
-    answersApi
+    placesAPI
       .getAll()
-      .then(answers => {
-        this.answers = answers
+      .then(places => {
+        this.places = places
       })
   },
   methods: {
-    add () {
-      this.$router.push({
-        name: 'EditAnswers',
-        params: { id: 'add' }
-      })
-    },
     edit (id) {
       this.$router.push({
         name: 'EditAnswers',

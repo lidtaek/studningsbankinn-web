@@ -1,8 +1,8 @@
 <template>
   <div>
     <Hero
-      title="Svör"
-      :subtitle="subtitle"
+      :title="title"
+      subtitle="Svör"
     />
     <section class="box">
       <form @submit.prevent>
@@ -12,57 +12,37 @@
           :error="error"
         />
 
-        <div class="columns">
-          <Input
-            v-model="answer.placeName"
-            :disabled="true"
-            label="Staður"
-            class="column is-6"
-          />
+        <table class="table is-fullwidth">
+          <thead>
+            <tr>
+              <th>Spurning</th>
+              <th class="has-text-centered">
+                Nei/Já
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="answer in answers"
+              :key="answer.placeId + '-' + answer.questionId"
+            >
+              <td>{{ answer.question }}</td>
+              <td class="has-text-centered">
+                <CheckboxSwitch
+                  :id="'a-' + answer.placeId + '-' + answer.questionId"
+                  v-model="answer.answer"
+                  :value="true"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-          <Input
-            v-model="answer.question"
-            :disabled="true"
-            label="Spurning"
-            class="column is-6"
-          />
-        </div>
-
-        <div class="columns">
-          <Select
-            v-model="answer.questionId"
-            :options="questions"
-            :disabled="working"
-            label="Spurning"
-            class="column is-9"
-          />
-
-          <Select
-            v-model="answer.answer"
-            :options="answers"
-            :disabled="working"
-            label="Svar"
-            class="column is-3"
-          />
-        </div>
-
-        <div class="columns">
-          <Button
-            :disabled="working"
-            label="Vista"
-            class="column is-6"
-            @click="save()"
-          />
-
-          <Button
-            v-if="isEdit"
-            :disabled="working"
-            type="danger"
-            label="Eyða"
-            class="column is-6 has-text-right"
-            @click="del()"
-          />
-        </div>
+        <Button
+          :disabled="false"
+          label="Vista"
+          @click="save"
+        />
       </form>
     </section>
   </div>
@@ -72,32 +52,26 @@
 import makeAPI from '../api'
 import Hero from '../_components/hero'
 import Notification from '../_components/notification'
-import Select from '../_components/select'
-import Input from '../_components/input'
 import Button from '../_components/button.vue'
+import CheckboxSwitch from '../_components/checkboxswitch'
 import EditMixin from '../_mixins/edit'
 
 export default {
   name: 'AnswersEdit',
   components: {
-    Input,
-    Select,
     Button,
     Hero,
-    Notification
+    Notification,
+    CheckboxSwitch
   },
   mixins: [EditMixin],
   data () {
     return {
       answersApi: {},
-      placesApi: {},
+      answers: [],
       questionsApi: {},
-      questionCategoriesApi: {},
-      answer: {},
-      places: [],
       questions: [],
-      questionCategories: [],
-      answers: [
+      answerOptions: [
         {
           value: true,
           text: 'Já'
@@ -109,63 +83,28 @@ export default {
       ]
     }
   },
+  computed: {
+    title () {
+      return this.answers.length > 0 ? this.answers[0].placeName : ''
+    }
+  },
   created () {
     this.working = true
     this.answersApi = makeAPI('answers')
     this.placesApi = makeAPI('places')
     this.questionsApi = makeAPI('questions')
-    this.questionCategoriesApi = makeAPI('questioncategories')
 
     const id = this.$route.params.id
 
     this.answersApi
-      .getSingle(id)
-      .then((answer) => {
-        this.answer = answer
+      .get({ placeId: id })
+      .then((answers) => {
+        this.answers = answers
         this.working = false
       })
       .catch(() => {
         this.error = true
         this.message = 'Villa kom upp. Skráð svar fannst ekki.'
-      })
-
-    this.placesApi
-      .getAll()
-      .then((places) => {
-        this.places = places.map((place) => ({
-          value: place.id,
-          text: place.name
-        }))
-      })
-      .catch((e) => {
-        this.error = true
-        this.message = 'Villa kom upp við að sækja staði'
-      })
-
-    this.questionsApi
-      .getAll()
-      .then((questions) => {
-        this.questions = questions.map((question) => ({
-          value: question.id,
-          text: question.question
-        }))
-      })
-      .catch((e) => {
-        this.error = true
-        this.message = 'Villa kom upp við að sækja spurningar'
-      })
-
-    this.questionCategoriesApi
-      .getAll()
-      .then((categories) => {
-        this.questionCategories = categories.map((category) => ({
-          value: category.id,
-          text: category.name
-        }))
-      })
-      .catch((e) => {
-        this.error = true
-        this.message = 'Villa kom upp við að sækja spurningaflokka'
       })
   },
   methods: {
@@ -175,7 +114,7 @@ export default {
       this.error = false
 
       this.answersApi
-        .upsert(this.answer)
+        .update(this.answers)
         .then((answer) => {
           if (answer.id) {
             this.success = true
@@ -192,36 +131,13 @@ export default {
         .finally(() => {
           this.working = false
         })
-    },
-    del () {
-      this.working = true
-      this.success = false
-      this.error = false
-
-      this.answersApi
-        .delete(this.answer)
-        .then((answer) => {
-          if (answer.id) {
-            this.success = true
-            this.message = 'Uppfærsla tókst'
-            setTimeout(() => {
-              this.$router.push({
-                name: 'ListAnswers'
-              })
-            }, 2500)
-          } else {
-            this.error = true
-            this.message = 'Tókst ekki að eyða'
-          }
-        })
-        .catch(() => {
-          this.error = true
-          this.message = 'Villa kom upp við aðgerð'
-        })
-        .finally(() => {
-          this.working = false
-        })
     }
   }
 }
 </script>
+
+<style scoped>
+.table td {
+  vertical-align: middle;
+}
+</style>
