@@ -14,6 +14,9 @@
             <th>
               Nafn
             </th>
+            <th>
+              Flokkur
+            </th>
             <th class="has-text-right">
               <button
                 class="button is-small"
@@ -33,6 +36,7 @@
           >
             <td>{{ place.id }}</td>
             <td>{{ place.name }}</td>
+            <td>{{ place.categoryName }}</td>
             <td class="has-text-right">
               <button
                 class="button is-small"

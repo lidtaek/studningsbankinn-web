@@ -1,4 +1,4 @@
- <template>
+<template>
   <div class="field">
     <label class="label">{{ label }}:</label>
     <div class="control">

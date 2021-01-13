@@ -16,8 +16,16 @@
           <Input
             v-model="question.question"
             :disabled="working"
-            class="column is-12"
+            class="column is-8"
             label="Spurning"
+          />
+
+          <Select
+            v-model="question.categoryId"
+            :disabled="working"
+            :options="questionCategories"
+            label="Flokkur"
+            class="column is-4"
           />
         </div>
 
@@ -48,6 +56,7 @@ import makeAPI from '../api'
 import Hero from '../_components/hero'
 import Notification from '../_components/notification'
 import Input from '../_components/input'
+import Select from '../_components/select'
 import Button from '../_components/button'
 import EditMixin from '../_mixins/edit'
 
@@ -55,6 +64,7 @@ export default {
   name: 'QuestionsEdit',
   components: {
     Input,
+    Select,
     Button,
     Hero,
     Notification
@@ -62,16 +72,19 @@ export default {
   mixins: [EditMixin],
   data () {
     return {
-      questionApi: {},
-      question: {}
+      questionsApi: {},
+      question: {},
+      questionCategoriesApi: {},
+      questionCategories: []
     }
   },
   created () {
     this.working = true
-    this.questionApi = makeAPI('questions')
+    this.questionsApi = makeAPI('questions')
+    this.questionCategoriesApi = makeAPI('questioncategories')
     const id = this.$route.params.id
 
-    this.questionApi
+    this.questionsApi
       .get(id)
       .then(question => {
         this.question = question
@@ -81,6 +94,19 @@ export default {
         this.error = true
         this.message = 'Villa kom upp. Spurning fannst ekki.'
       })
+
+    this.questionCategoriesApi
+      .getAll()
+      .then(categories => {
+        this.questionCategories = categories.map(category => ({
+          value: category.id,
+          text: category.name
+        }))
+      })
+      .catch(() => {
+        this.error = true
+        this.message = 'Villa kom upp. Flokkar fundust ekki.'
+      })
   },
   methods: {
     save () {
@@ -88,7 +114,7 @@ export default {
       this.success = false
       this.error = false
 
-      this.questionApi
+      this.questionsApi
         .upsert(this.question)
         .then(question => {
           if (question.id) {
@@ -112,7 +138,7 @@ export default {
       this.success = false
       this.error = false
 
-      this.questionApi
+      this.questionsApi
         .delete(this.question)
         .then(question => {
           if (question.id) {

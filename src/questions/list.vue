@@ -14,6 +14,9 @@
             <th>
               Spurning
             </th>
+            <th>
+              Flokkur
+            </th>
             <th class="has-text-right">
               <button
                 class="button is-small"
@@ -33,6 +36,7 @@
           >
             <td>{{ question.id }}</td>
             <td>{{ question.question }}</td>
+            <td>{{ question.categoryName }}</td>
             <td class="has-text-right">
               <button
                 class="button is-small"

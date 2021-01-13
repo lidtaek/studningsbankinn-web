@@ -13,20 +13,18 @@
         />
 
         <div class="columns">
-          <Select
-            v-model="answer.placeId"
-            :options="places"
-            :disabled="working"
+          <Input
+            v-model="answer.placeName"
+            :disabled="true"
             label="Staður"
-            class="column is-9"
+            class="column is-6"
           />
 
-          <Select
-            v-model="answer.questionCategoryId"
-            :options="questionCategories"
-            :disabled="working"
-            label="Flokkur"
-            class="column is-3"
+          <Input
+            v-model="answer.question"
+            :disabled="true"
+            label="Spurning"
+            class="column is-6"
           />
         </div>
 
@@ -75,12 +73,14 @@ import makeAPI from '../api'
 import Hero from '../_components/hero'
 import Notification from '../_components/notification'
 import Select from '../_components/select'
+import Input from '../_components/input'
 import Button from '../_components/button.vue'
 import EditMixin from '../_mixins/edit'
 
 export default {
   name: 'AnswersEdit',
   components: {
+    Input,
     Select,
     Button,
     Hero,
@@ -120,7 +120,7 @@ export default {
 
     this.answersApi
       .get(id)
-      .then(answer => {
+      .then((answer) => {
         this.answer = answer
         this.working = false
       })
@@ -131,39 +131,39 @@ export default {
 
     this.placesApi
       .getAll()
-      .then(places => {
-        this.places = places.map(place => ({
+      .then((places) => {
+        this.places = places.map((place) => ({
           value: place.id,
           text: place.name
         }))
       })
-      .catch(e => {
+      .catch((e) => {
         this.error = true
         this.message = 'Villa kom upp við að sækja staði'
       })
 
     this.questionsApi
       .getAll()
-      .then(questions => {
-        this.questions = questions.map(question => ({
+      .then((questions) => {
+        this.questions = questions.map((question) => ({
           value: question.id,
           text: question.question
         }))
       })
-      .catch(e => {
+      .catch((e) => {
         this.error = true
         this.message = 'Villa kom upp við að sækja spurningar'
       })
 
     this.questionCategoriesApi
       .getAll()
-      .then(categories => {
-        this.questionCategories = categories.map(category => ({
+      .then((categories) => {
+        this.questionCategories = categories.map((category) => ({
           value: category.id,
           text: category.name
         }))
       })
-      .catch(e => {
+      .catch((e) => {
         this.error = true
         this.message = 'Villa kom upp við að sækja spurningaflokka'
       })
@@ -176,7 +176,7 @@ export default {
 
       this.answersApi
         .upsert(this.answer)
-        .then(answer => {
+        .then((answer) => {
           if (answer.id) {
             this.success = true
             this.message = 'Uppfærsla tókst'
@@ -200,7 +200,7 @@ export default {
 
       this.answersApi
         .delete(this.answer)
-        .then(answer => {
+        .then((answer) => {
           if (answer.id) {
             this.success = true
             this.message = 'Uppfærsla tókst'

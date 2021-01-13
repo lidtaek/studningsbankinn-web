@@ -11,7 +11,9 @@
             <th>#</th>
             <th>Nafn</th>
             <th>Staður</th>
-            <th class="has-text-right">&nbsp;</th>
+            <th class="has-text-right">
+              &nbsp;
+            </th>
           </tr>
         </thead>
         <tbody>

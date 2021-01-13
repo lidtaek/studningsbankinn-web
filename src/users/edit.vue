@@ -22,7 +22,8 @@
 
         <div
           v-if="!isEdit"
-          class="columns">
+          class="columns"
+        >
           <Input
             v-model="user.username"
             :disabled="working"
@@ -59,7 +60,8 @@
 
         <div
           v-if="isEdit"
-          class="columns">
+          class="columns"
+        >
           <Input
             v-model="user.token"
             :disabled="true"
