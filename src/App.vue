@@ -75,7 +75,7 @@
             class="navbar-item"
             active-class="is-active"
           >
-            Svör
+            Svörun
           </router-link>
 
           <router-link
