@@ -1,7 +1,7 @@
 <template>
   <div>
     <Hero
-      title="Spurningaflokkar"
+      :title="title"
       :subtitle="subtitle"
       :x="true"
     />
@@ -65,6 +65,14 @@ export default {
     return {
       questionCategoriesApi: {},
       category: {}
+    }
+  },
+  computed: {
+    title () {
+      return this.category.name ? this.category.name : 'Spurningaflokkar'
+    },
+    subtitle () {
+      return this.isEdit ? 'Hafðu í huga að flokkurinn er nýtt á mörgum stöðum.' : 'Skráðu nýjan flokk.'
     }
   },
   created () {

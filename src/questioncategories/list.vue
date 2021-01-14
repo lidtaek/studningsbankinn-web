@@ -2,21 +2,24 @@
   <div>
     <Hero
       title="Spurningaflokkar"
-      subtitle="Listi yfir allar skráða flokka"
+      subtitle="Stofnaðu nýjan flokk eða breyttu eldri skráningu."
     />
     <section class="box">
       <table class="table is-fullwidth">
         <thead>
           <tr>
-            <th>
+            <th width="9%">
               #
             </th>
-            <th>
+            <th width="90%">
               Heiti
             </th>
-            <th class="has-text-right">
+            <th
+              width="1%"
+              class="has-text-right"
+            >
               <button
-                class="button is-small"
+                class="button is-small is-info"
                 @click="add()"
               >
                 <span class="icon">
@@ -35,7 +38,7 @@
             <td>{{ category.name }}</td>
             <td class="has-text-right">
               <button
-                class="button is-small"
+                class="button is-small is-warning"
                 @click="edit(category.id)"
               >
                 <span class="icon">

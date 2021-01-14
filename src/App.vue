@@ -9,7 +9,10 @@
           <span class="icon">
             <i class="fas fa-wheelchair fa-2x" />
           </span>
-          <div class="has-text-primary" style="margin-left: 5px; ">STUÐNINGSBANKINN</div>
+          <div
+            class="has-text-primary"
+            style="margin-left: 5px; "
+          >STUÐNINGSBANKINN</div>
         </a>
 
         <a

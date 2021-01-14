@@ -1,7 +1,7 @@
 <template>
   <div>
     <Hero
-      title="Staðarflokkar"
+      :title="title"
       :subtitle="subtitle"
       :x="true"
     />
@@ -65,6 +65,14 @@ export default {
     return {
       placeCategoriesApi: {},
       category: {}
+    }
+  },
+  computed: {
+    title () {
+      return this.category.name ? this.category.name : 'Staðarflokkar'
+    },
+    subtitle () {
+      return this.isEdit ? 'Var heitið á flokknum vitlaust?' : 'Skráðu nýjan flokk.'
     }
   },
   created () {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Hero
-      title="Spurningar"
+      :title="title"
       :subtitle="subtitle"
       :x="true"
     />
@@ -77,6 +77,14 @@ export default {
       question: {},
       questionCategoriesApi: {},
       questionCategories: []
+    }
+  },
+  computed: {
+    title () {
+      return this.question.question ? this.question.question : 'Spurning'
+    },
+    subtitle () {
+      return this.isEdit ? 'Hafðu í huga að spurningin gæti verið notuð á mörgum stöðum.' : 'Skráðu nýja spurningu.'
     }
   },
   created () {

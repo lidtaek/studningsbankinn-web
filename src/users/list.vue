@@ -2,7 +2,7 @@
   <div>
     <Hero
       title="Notendur"
-      subtitle="Listi yfir alla skráða notendur"
+      subtitle="Þeir sem hafa aðgang að gögnunum á einn eða annan hátt."
     />
     <section class="box">
       <table class="table is-fullwidth">
@@ -22,7 +22,7 @@
               class="has-text-right"
             >
               <button
-                class="button is-small"
+                class="button is-small is-info"
                 @click="add()"
               >
                 <span class="icon">
@@ -42,7 +42,7 @@
             <td>{{ userType(user) }}</td>
             <td class="has-text-right">
               <button
-                class="button is-small"
+                class="button is-small is-warning"
                 @click="edit(user.id)"
               >
                 <span class="icon">

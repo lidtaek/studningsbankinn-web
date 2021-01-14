@@ -2,24 +2,27 @@
   <div>
     <Hero
       title="Spurningar"
-      subtitle="Listi yfir allar skráðar spurningar"
+      subtitle="Listi yfir allar skráðar spurningar í kerfinu."
     />
     <section class="box">
       <table class="table is-fullwidth">
         <thead>
           <tr>
-            <th>
+            <th width="9%">
               #
             </th>
-            <th>
+            <th width="60%">
               Spurning
             </th>
-            <th>
+            <th width="30%">
               Flokkur
             </th>
-            <th class="has-text-right">
+            <th
+              width="1%"
+              class="has-text-right"
+            >
               <button
-                class="button is-small"
+                class="button is-small is-info"
                 @click="add()"
               >
                 <span class="icon">
@@ -39,7 +42,7 @@
             <td>{{ question.categoryName }}</td>
             <td class="has-text-right">
               <button
-                class="button is-small"
+                class="button is-small is-warning"
                 @click="edit(question.id)"
               >
                 <span class="icon">

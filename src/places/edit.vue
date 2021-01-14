@@ -1,7 +1,7 @@
 <template>
   <div>
     <Hero
-      title="Staðir"
+      :title="title"
       :subtitle="subtitle"
       :x="true"
     />
@@ -100,7 +100,7 @@ import Notification from '../_components/notification'
 import Input from '../_components/input'
 import Select from '../_components/select'
 import Textarea from '../_components/textarea'
-import Button from '../_components/button.vue'
+import Button from '../_components/button'
 import EditMixin from '../_mixins/edit'
 
 export default {
@@ -120,6 +120,14 @@ export default {
       placeCategoriesApi: {},
       place: {},
       placeCategories: []
+    }
+  },
+  computed: {
+    title () {
+      return this.place.name ? this.place.name : 'Staðir'
+    },
+    subtitle () {
+      return this.isEdit ? 'Breyttu og lagaðu.' : 'Skráðu nýjan stað.'
     }
   },
   created () {

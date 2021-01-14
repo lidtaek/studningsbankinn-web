@@ -1,22 +1,23 @@
 <template>
   <div>
     <Hero
-      title="Svör"
-      subtitle="Listi yfir öll skráð svör"
+      title="Svörun"
+      subtitle="Svör eru flokkuð niður á staði."
     />
     <section class="box">
       <table class="table is-fullwidth">
         <thead>
           <tr>
-            <th>
+            <th width="9%">
               #
             </th>
-            <th>
+            <th width="90%">
               Staður
             </th>
-            <th class="has-text-right">
-              &nbsp;
-            </th>
+            <th
+              width="1%"
+              class="has-text-right"
+            />
           </tr>
         </thead>
         <tbody>
@@ -28,7 +29,7 @@
             <td>{{ place.name }}</td>
             <td class="has-text-right">
               <button
-                class="button is-small"
+                class="button is-small is-warning"
                 @click="edit(place.id)"
               >
                 <span class="icon">

@@ -2,7 +2,7 @@
   <div>
     <Hero
       :title="title"
-      subtitle="Svör"
+      :subtitle="subtitle"
       :x="true"
     />
     <section class="box">
@@ -71,6 +71,9 @@ export default {
   computed: {
     title () {
       return this.answers.length > 0 ? this.answers[0].placeName : ''
+    },
+    subtitle () {
+      return 'Skráð svör frá viðkomandi aðila - þú getur breytt þeim.'
     }
   },
   created () {

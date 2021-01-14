@@ -2,15 +2,19 @@
   <div>
     <Hero
       title="Spurningalistar"
-      subtitle="Listi yfir spurningalista"
+      subtitle="Spurningalistarnir eru mismunandi eftir flokki staðarins."
     />
     <section class="box">
       <table class="table is-fullwidth">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Nafn</th>
-            <th>&nbsp;</th>
+            <th width="1%">
+              #
+            </th>
+            <th width="90%">
+              Nafn
+            </th>
+            <th width="1%" />
           </tr>
         </thead>
         <tbody>
@@ -22,7 +26,7 @@
             <td>{{ category.name }}</td>
             <td class="has-text-right">
               <button
-                class="button is-small"
+                class="button is-small is-warning"
                 @click="edit(category.id)"
               >
                 <span class="icon">

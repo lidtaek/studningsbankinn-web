@@ -1,7 +1,7 @@
 <template>
   <div>
     <Hero
-      title="Notendur"
+      :title="title"
       :subtitle="subtitle"
       :x="true"
     />
@@ -46,19 +46,18 @@
             v-model="user.placeId"
             :disabled="working"
             :options="places"
-            label="Staður"
-            class="column is-7"
+            label="Má bara fá gögn um stað"
+            class="column is-6"
           />
 
           <Select
             v-model="user.placeCategoryId"
             :disabled="working"
             :options="placeCategories"
-            label="Flokkur"
-            class="column is-5"
+            label="Má bara fá gögn um flokk"
+            class="column is-6"
           />
         </div>
-
         <div
           v-if="isEdit"
           class="columns"
@@ -120,6 +119,14 @@ export default {
       places: [],
       placeCategoriesApi: {},
       placeCategories: []
+    }
+  },
+  computed: {
+    title () {
+      return this.user.name ? this.user.name : 'Notendur'
+    },
+    subtitle () {
+      return this.isEdit ? 'Breyttu skráningu notanda.' : 'Stofnaðu nýjan notanda og gefðu honum viðeigandi aðgang'
     }
   },
   created () {
