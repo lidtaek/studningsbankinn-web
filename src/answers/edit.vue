@@ -10,40 +10,26 @@
         <Notification
           :message="message"
           :success="success"
+          :warning="warning"
           :error="error"
         />
 
-        <table class="table is-fullwidth">
-          <thead>
-            <tr>
-              <th>Spurning</th>
-              <th class="has-text-centered">
-                Nei/Já
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="answer in answers"
-              :key="answer.placeId + '-' + answer.questionId"
-            >
-              <td>{{ answer.question }}</td>
-              <td class="has-text-centered">
-                <CheckboxSwitch
-                  :id="'a-' + answer.placeId + '-' + answer.questionId"
-                  v-model="answer.answer"
-                  :value="true"
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <Button
-          :disabled="false"
-          label="Vista"
-          @click="save"
-        />
+        <div
+          v-for="(answer, index) in answers"
+          :key="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
+          class="columns"
+        >
+          <div class="column is-12">
+            <CheckboxSwitch
+              :id="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
+              v-model="answer.answer"
+              :disabled="working"
+              :value="true"
+              :label="answer.question"
+              @change="save(answer)"
+            />
+          </div>
+        </div>
       </form>
     </section>
   </div>
@@ -53,14 +39,12 @@
 import makeAPI from '../api'
 import Hero from '../_components/hero'
 import Notification from '../_components/notification'
-import Button from '../_components/button.vue'
 import CheckboxSwitch from '../_components/checkboxswitch'
 import EditMixin from '../_mixins/edit'
 
 export default {
   name: 'AnswersEdit',
   components: {
-    Button,
     Hero,
     Notification,
     CheckboxSwitch
@@ -102,6 +86,11 @@ export default {
       .then((answers) => {
         this.answers = answers
         this.working = false
+
+        if (this.answers.length === 0) {
+          this.warning = true
+          this.message = 'Engin svör fundust. Ertu viss um það sé til spurningalisti?'
+        }
       })
       .catch(() => {
         this.error = true
@@ -109,25 +98,30 @@ export default {
       })
   },
   methods: {
-    save () {
+    save (answer) {
       this.working = true
       this.success = false
       this.error = false
 
+      const id = this.$route.params.id
       this.answersApi
-        .update(this.answers)
+        .upsert(answer)
         .then((answer) => {
-          if (answer.id) {
-            this.success = true
-            this.message = 'Uppfærsla tókst'
-          } else {
+          if (!answer.id) {
             this.error = true
-            this.message = 'Tókst ekki að vista'
+            this.message = 'Tókst ekki að vista.'
           }
+
+          return this.answersApi
+            .get({ placeId: id })
+            .then((answers) => {
+              this.answers = answers
+              this.working = false
+            })
         })
         .catch(() => {
           this.error = true
-          this.message = 'Villa kom upp við aðgerð'
+          this.message = 'Villa kom upp.'
         })
         .finally(() => {
           this.working = false

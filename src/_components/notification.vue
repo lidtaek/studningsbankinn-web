@@ -30,30 +30,34 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    warning: {
+      type: Boolean,
+      required: false,
+      default: false
 
     }
   },
   data () {
     return {
       successNotification: this.success,
-      errorNotification: this.error
+      errorNotification: this.error,
+      warningNotification: this.warning
     }
   },
   computed: {
     classes () {
       return {
         'is-success': this.success,
-        'is-danger': this.error
+        'is-danger': this.error,
+        'is-warning': this.warning
       }
     },
     show () {
-      return this.successNotification || this.errorNotification
+      return this.successNotification || this.errorNotification || this.warningNotification
     }
   },
   watch: {
-    error (val) {
-      this.errorNotification = val
-    },
     success (val) {
       this.successNotification = val
 
@@ -62,12 +66,19 @@ export default {
           this.close()
         }, 2000)
       }
+    },
+    error (val) {
+      this.errorNotification = val
+    },
+    warning (val) {
+      this.warningNotification = val
     }
   },
   methods: {
     close () {
       this.successNotification = false
       this.errorNotification = false
+      this.warningNotification = false
     }
   }
 }

@@ -47,7 +47,7 @@ export default function makeAPI (entity) {
       const hasId = Boolean(data.id)
 
       if (hasId) {
-        this.update(data)
+        return this.update(data)
       }
 
       return this.insert(data)

@@ -7,7 +7,8 @@ export default {
       working: false,
       message: '',
       success: false,
-      error: false
+      error: false,
+      warning: false
     }
   },
   computed: {

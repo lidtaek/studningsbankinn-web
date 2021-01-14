@@ -2,7 +2,7 @@
   <div>
     <Hero
       :title="placeCategory.name || ''"
-      subtitle="Spurningalisti"
+      subtitle="Hakaðu við þær spurningar sem þú vilt hafa á spurningalistanum."
       :x="true"
     />
     <section class="box">
@@ -14,42 +14,22 @@
         />
       </form>
 
-      <table
-        class="table is-fullwidth"
+      <div
+        v-for="(questionnaire, index) in questionnaires"
+        :key="'q' + index + '-' + questionnaire.placeCategoryId + '-' + questionnaire.questionId"
+        class="columns"
       >
-        <thead>
-          <tr>
-            <th>Spurning</th>
-            <th class="is-hidden-mobile">Flokkur</th>
-            <th class="has-text-centered">
-              Hafa á lista
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="question in questions"
-            :key="question.id"
-          >
-            <td>{{ question.question }}</td>
-            <td class="is-hidden-mobile">{{ question.categoryName }}</td>
-            <td class="has-text-centered">
-              <CheckboxSwitch
-                :id="'q-' + question.id"
-                v-model="questionnaire.questions"
-                :value="question.id"
-                :disabled="error"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <Button
-        :disabled="error"
-        label="Vista"
-        @click="save"
-      />
+        <div class="column is-12">
+          <CheckboxSwitch
+            :id="'q' + index + '-' + questionnaire.placeCategoryId + '-' + questionnaire.questionId"
+            v-model="questionnaire.use"
+            :value="true"
+            :disabled="error || working"
+            :label="questionnaire.question"
+            @change="save(questionnaire)"
+          />
+        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -58,14 +38,12 @@
 import makeAPI from '../api'
 import Hero from '../_components/hero'
 import Notification from '../_components/notification'
-import Button from '../_components/button'
 import CheckboxSwitch from '../_components/checkboxswitch'
 import EditMixin from '../_mixins/edit'
 
 export default {
   name: 'QuestionnairesEdit',
   components: {
-    Button,
     CheckboxSwitch,
     Hero,
     Notification
@@ -74,13 +52,15 @@ export default {
   data () {
     return {
       questionnairesApi: {},
-      questionnaire: {
-        placeCategoryId: '',
-        questions: []
-      },
+      questionnaires: [],
       questionsApi: {},
       questions: [],
       placeCategory: {}
+    }
+  },
+  computed: {
+    title () {
+      return this.questionnaires.length > 0 ? this.questionnaires[0].placeCategoryName : ''
     }
   },
   created () {
@@ -90,12 +70,10 @@ export default {
     this.placeCategoriesApi = makeAPI('placecategories')
 
     const id = this.$route.params.id
-
     this.questionnairesApi
       .get({ placeCategoryId: id })
       .then(questionnaires => {
-        this.questionnaire.placeCategoryId = id
-        this.questionnaire.questions = questionnaires.map(qn => qn.questionId)
+        this.questionnaires = questionnaires
       })
 
     this.questionsApi
@@ -120,25 +98,31 @@ export default {
       })
   },
   methods: {
-    save () {
+    save (questionnaire) {
       this.working = true
       this.success = false
       this.error = false
 
+      const id = this.$route.params.id
+
       this.questionnairesApi
-        .update(this.questionnaire)
+        .upsert(questionnaire)
         .then(questionnaire => {
-          if (questionnaire.id) {
-            this.success = true
-            this.message = 'Uppfærsla tókst'
-          } else {
+          if (!questionnaire.id) {
             this.error = true
-            this.message = 'Tókst ekki að vista'
+            this.message = 'Tókst ekki að vista.'
           }
+
+          // Sækja aftur
+          return this.questionnairesApi
+            .get({ placeCategoryId: id })
+            .then(questionnaires => {
+              this.questionnaires = questionnaires
+            })
         })
         .catch(() => {
           this.error = true
-          this.message = 'Villa kom upp við aðgerð'
+          this.message = 'Villa kom upp.'
         })
         .finally(() => {
           this.working = false

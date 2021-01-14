@@ -9,7 +9,9 @@
       class="switch is-rounded"
       @change="updateInput"
     >
-    <label :for="id" />
+    <label :for="id">
+      {{ label }}
+    </label>
   </div>
 </template>
 
@@ -39,9 +41,9 @@ export default {
       required: true
     },
     label: {
-      type: [Array, String],
+      type: [String],
       required: false,
-      default: undefined
+      default: ''
     }
   },
   computed: {
