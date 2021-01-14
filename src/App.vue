@@ -6,7 +6,10 @@
           class="navbar-item"
           href="/#/login"
         >
-          STUÐNINGSBANKINN
+          <span class="icon">
+            <i class="fas fa-wheelchair fa-2x" />
+          </span>
+          <div style="margin-left: 5px; ">STUÐNINGSBANKINN</div>
         </a>
 
         <a

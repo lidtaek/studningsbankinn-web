@@ -2,7 +2,7 @@
   <div>
     <Hero
       title="Staðir"
-      subtitle="Listi yfir alla skráða staði"
+      subtitle="Stofnaðu nýjan stað eða breyttu eldri skráningu."
     />
     <section class="box">
       <table class="table is-fullwidth">
