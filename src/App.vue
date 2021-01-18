@@ -31,6 +31,7 @@
       </div>
 
       <div
+        v-if="user.name"
         id="navbar"
         class="navbar-menu"
         :class="{'is-active': burger }"
