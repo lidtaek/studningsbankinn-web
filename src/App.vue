@@ -86,6 +86,14 @@
           </router-link>
 
           <router-link
+            to="/votes"
+            class="navbar-item"
+            active-class="is-active"
+          >
+            Atkvæði
+          </router-link>
+
+          <router-link
             to="/users"
             class="navbar-item"
             active-class="is-active"

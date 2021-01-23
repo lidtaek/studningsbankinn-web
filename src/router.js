@@ -85,6 +85,11 @@ export default new Router({
       name: 'EditPlaceCategories',
       path: '/placecategories/:id',
       component: () => import('./placecategories/edit.vue')
+    },
+    {
+      name: 'ListVotes',
+      path: '/votes',
+      component: () => import('./votes/list.vue')
     }
   ]
 })
