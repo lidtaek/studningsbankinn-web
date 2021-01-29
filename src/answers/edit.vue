@@ -19,13 +19,24 @@
           :key="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
           class="columns"
         >
-          <div class="column is-12">
+          <div class="column is-6">
             <CheckboxSwitch
               :id="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
               v-model="answer.answer"
               :disabled="working"
               :value="true"
               :label="answer.question"
+              @change="save(answer)"
+            />
+          </div>
+
+          <div class="column is-6">
+            <CheckboxSwitch
+              :id="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
+              v-model="answer.verified"
+              :disabled="working"
+              :value="true"
+              :label="'Staðfest'"
               @change="save(answer)"
             />
           </div>
