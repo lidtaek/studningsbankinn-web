@@ -169,7 +169,9 @@ export default {
     },
     logout () {
       this.user = {}
-      this.$router.go()
+      this.$router.push({
+        name: 'Login'
+      })
     }
   }
 }
