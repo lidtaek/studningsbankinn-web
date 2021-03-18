@@ -97,7 +97,7 @@ export default {
       })
       .catch(() => {
         this.error = true
-        this.message = 'Villa kom upp. Skráð svar fannst ekki.'
+        this.message = 'Engar spurningar fundust. Ertu viss um að þú sért með réttan hlekk?'
       })
     },
     save (answer) {
