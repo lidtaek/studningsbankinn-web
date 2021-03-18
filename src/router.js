@@ -52,6 +52,11 @@ export default new Router({
       component: () => import('./answers/edit.vue')
     },
     {
+      name: 'Answer',
+      path: '/svara/:token',
+      component: () => import('./answers/public.vue')
+    },
+    {
       name: 'ListUsers',
       path: '/users',
       component: () => import('./users/list.vue')
