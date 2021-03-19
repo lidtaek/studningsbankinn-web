@@ -13,14 +13,16 @@
           :warning="warning"
           :error="error"
         />
-
         <div
-          v-for="(answer, index) in answers"
-          :key="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
+          v-for="category in categories"
+          :key="category"
           class="columns"
         >
           <div class="column is-12">
+            <h3 class="title is-6">{{ category }}</h3>
             <CheckboxSwitch
+              v-for="(answer, index) in groupedAnswers[category]"
+              :key="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
               :id="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
               v-model="answer.answer"
               :disabled="working"
@@ -29,7 +31,7 @@
               @change="save(answer)"
             />
           </div>
-        </div>
+        </div>          
       </form>
     </section>
   </div>
@@ -41,6 +43,7 @@ import Hero from '../_components/hero'
 import Notification from '../_components/notification'
 import CheckboxSwitch from '../_components/checkboxswitch'
 import EditMixin from '../_mixins/edit'
+import groupBy from 'lodash.groupby'
 
 export default {
   name: 'AnswersEdit',
@@ -74,7 +77,15 @@ export default {
     },
     subtitle () {
       return 'Skráð svör frá viðkomandi aðila - þú getur breytt þeim.'
-    }
+    },
+    categories () {
+      return this.answers
+        .map((a) => a.questionCategoryName)
+        .filter((qcn, index, self) => self.indexOf(qcn) === index)
+    },
+    groupedAnswers () {
+      return groupBy(this.answers, "questionCategoryName")
+    },
   },
   created () {
     this.working = true
@@ -87,7 +98,7 @@ export default {
     this.answersApi
       .get({ placeId: id })
       .then((answers) => {
-        this.answers = answers
+        this.answers = answers    
         this.working = false
 
         if (this.answers.length === 0) {
@@ -115,7 +126,7 @@ export default {
             this.message = 'Tókst ekki að vista.'
           }
 
-          return this.answersApi
+           return this.answersApi
             .get({ placeId: id })
             .then((answers) => {
               this.answers = answers

@@ -23,6 +23,7 @@
     "express": "^4.16.4",
     "express-sslify": "^1.2.0",
     "helmet": "^4.3.1",
+    "lodash.groupby": "^4.6.0",
     "superagent": "^6.1.0",
     "tiny-cookie": "^2.3.1",
     "vue": "~2.6.11",
