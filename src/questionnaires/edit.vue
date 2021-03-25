@@ -1,7 +1,7 @@
 <template>
   <div>
     <Hero
-      :title="placeCategory.name || ''"
+      :title="title"
       subtitle="Hakaðu við þær spurningar sem þú vilt hafa á spurningalistanum."
       :x="true"
     />
@@ -15,19 +15,37 @@
       </form>
 
       <div
-        v-for="(questionnaire, index) in questionnaires"
-        :key="'q' + index + '-' + questionnaire.placeCategoryId + '-' + questionnaire.questionId"
-        class="columns"
+        v-for="category in categories"
+        :key="category"
       >
-        <div class="column is-12">
-          <CheckboxSwitch
-            :id="'q' + index + '-' + questionnaire.placeCategoryId + '-' + questionnaire.questionId"
-            v-model="questionnaire.use"
-            :value="true"
-            :disabled="error || working"
-            :label="questionnaire.question"
-            @change="save(questionnaire)"
-          />
+
+        <h3 class="title is-6">{{ category }}</h3>
+        <div
+          v-for="(questionnaire, index) in groupedQuestionnaires[category]"
+          :key="'a' + index + '-' + questionnaire.placeId + '-' + questionnaire.questionId"
+          class="columns is-gapless is-multiline is-mobile mb-0"
+        >
+          <div class="column is-12 mb-2">{{ questionnaire.question }}</div>
+          <div class="column is-10">
+            <CheckboxSwitch
+              :id="'q' + index + '-' + questionnaire.placeCategoryId + '-' + questionnaire.questionId"
+              v-model="questionnaire.use"
+              :disabled="working"
+              :value="true"
+              :label="'Hafa á spurningalista'"
+              @change="save(questionnaire)"
+            />
+          </div>
+          <div class="column is-2">
+            <Input
+              v-model="questionnaire.ordering"
+              :size="'small'"
+              :disabled="error || working"
+              :placeholder="'Röðun'"
+              @change="save(questionnaire)"
+            />
+          </div>
+          <div class="column is-12"><hr /></div>
         </div>
       </div>
     </section>
@@ -39,66 +57,54 @@ import makeAPI from '../api'
 import Hero from '../_components/hero'
 import Notification from '../_components/notification'
 import CheckboxSwitch from '../_components/checkboxswitch'
+import Input from '../_components/input'
 import EditMixin from '../_mixins/edit'
+import groupBy from 'lodash.groupby'
 
 export default {
   name: 'QuestionnairesEdit',
   components: {
     CheckboxSwitch,
     Hero,
-    Notification
+    Notification,
+    Input
   },
   mixins: [EditMixin],
   data () {
     return {
       questionnairesApi: {},
       questionnaires: [],
-      questionsApi: {},
-      questions: [],
-      placeCategory: {}
     }
   },
   computed: {
     title () {
       return this.questionnaires.length > 0 ? this.questionnaires[0].placeCategoryName : ''
-    }
+    },
+    categories () {
+      return this.questionnaires
+        .map((a) => a.questionCategoryName)
+        .filter((qcn, index, self) => self.indexOf(qcn) === index)
+    },
+    groupedQuestionnaires () {
+      return groupBy(this.questionnaires, "questionCategoryName")
+    },
   },
   created () {
-    this.working = true
-    this.questionsApi = makeAPI('questions')
+    this.working = true    
     this.questionnairesApi = makeAPI('questionnaires')
-    this.placeCategoriesApi = makeAPI('placecategories')
 
     const id = this.$route.params.id
     this.questionnairesApi
       .get({ placeCategoryId: id })
       .then(questionnaires => {
         this.questionnaires = questionnaires
-      })
-
-    this.questionsApi
-      .getAll()
-      .then(questions => {
-        this.questions = questions
         this.working = false
-      })
-      .catch(() => {
-        this.error = true
-        this.message = 'Villa kom upp við að sækja spurningar.'
-      })
-
-    this.placeCategoriesApi
-      .getSingle(id)
-      .then(category => {
-        this.placeCategory = category
-      })
-      .catch(e => {
-        this.error = true
-        this.message = 'Spurningalisti fannst ekki.'
-      })
+      })    
+   
   },
   methods: {
     save (questionnaire) {
+      console.log('vista')
       this.working = true
       this.success = false
       this.error = false

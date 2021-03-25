@@ -77,11 +77,6 @@ export default new Router({
       component: () => import('./questionnaires/edit.vue')
     },
     {
-      name: 'ViewQuestionnaire',
-      path: '/questionnaire/:token',
-      component: () => import('./questionnaires/questionnaire.vue')
-    },
-    {
       name: 'ListPlaceCategories',
       path: '/placecategories',
       component: () => import('./placecategories/list.vue')

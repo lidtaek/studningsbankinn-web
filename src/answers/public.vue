@@ -19,34 +19,35 @@
           :key="category"
         >
 
-        <h3 class="title is-6">{{ category }}</h3>
-        <div
-          v-for="(answer, index) in groupedAnswers[category]"
-          :key="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
-          class="columns is-gapless is-multiline is-mobile mb-0"
-        >
-          <div class="column is-12 mb-2">{{ answer.question }}</div>                      
-          <div class="column is-4">            
-            <CheckboxSwitch              
-              :id="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
-              v-model="answer.answer"
-              :disabled="working"
-              :value="true"
-              :label="'Já'"
-              @change="save(answer)"
-            />
+          <h3 class="title is-6">{{ category }}</h3>
+          <div
+            v-for="(answer, index) in groupedAnswers[category]"
+            :key="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
+            class="columns is-gapless is-multiline is-mobile mb-0"
+          >
+            <div class="column is-12 mb-2">{{ answer.question }}</div>
+            <div class="column is-4">
+              <CheckboxSwitch
+                :id="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
+                v-model="answer.answer"
+                :disabled="working"
+                :value="true"
+                :label="'Já'"
+                @change="save(answer)"
+              />
+            </div>
+            <div class="column is-8">
+              <Input
+                v-model="answer.comment"
+                :size="'small'"
+                :disabled="working"
+                :placeholder="'Nánar'"
+                @change="save(answer)"
+              />
+            </div>
+            <div class="column is-12"><hr /></div>
           </div>
-          <div class="column is-8">
-            <Input
-              v-model="answer.comment"
-              :size="'small'"
-              :disabled="working"
-              :placeholder="'Nánar'"
-              
-            />
-          </div>
-          <div class="column is-12"><hr /></div>
-        </div>         
+        </div>
       </form>
     </section>
   </div>

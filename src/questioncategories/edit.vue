@@ -18,25 +18,32 @@
             v-model="category.name"
             :disabled="working"
             label="Heiti"
-            class="column is-12"
+            class="column is-8"
+          />
+
+          <Input
+            v-model="category.ordering"
+            :disabled="working"
+            label="Röðun"
+            class="column is-4"
           />
         </div>
 
-        <div class="columns">
-          <Button
-            :disabled="working"
-            label="Vista"
-            class="column is-6"
-            @click="save()"
-          />
-
+        <div class="columns">          
           <Button
             v-if="isEdit"
             :disabled="working"
             type="danger"
             label="Eyða"
-            class="column is-6 has-text-right"
+            class="column is-6"
             @click="del()"
+          />
+
+          <Button
+            :disabled="working"
+            label="Vista"
+            class="column is-6 has-text-right"
+            @click="save()"
           />
         </div>
       </form>

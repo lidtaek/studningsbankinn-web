@@ -8,7 +8,10 @@
       <table class="table is-fullwidth">
         <thead>
           <tr>
-            <th width="9%">
+            <th
+              class="has-text-centered has-text-grey-light"
+              width="9%"
+            >
               #
             </th>
             <th width="60%">
@@ -37,7 +40,7 @@
             v-for="question in questions"
             :key="question.id"
           >
-            <td>{{ question.id }}</td>
+            <td class="has-text-centered has-text-grey-light">{{ question.id }}</td>
             <td>{{ question.question }}</td>
             <td>{{ question.categoryName }}</td>
             <td class="has-text-right">

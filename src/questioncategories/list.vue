@@ -8,10 +8,16 @@
       <table class="table is-fullwidth">
         <thead>
           <tr>
-            <th width="9%">
+            <th
+              class="has-text-centered has-text-grey-light"
+              width="9%"
+            >
               #
             </th>
-            <th width="90%">
+            <th width="10%">
+              Röðun
+            </th>
+            <th width="80%">
               Heiti
             </th>
             <th
@@ -34,7 +40,8 @@
             v-for="category in questionCategories"
             :key="category.id"
           >
-            <td>{{ category.id }}</td>
+            <td class="has-text-centered has-text-grey-light">{{ category.id }}</td>
+            <td class="has-text-centered">{{ category.ordering }}</td>
             <td>{{ category.name }}</td>
             <td class="has-text-right">
               <button
