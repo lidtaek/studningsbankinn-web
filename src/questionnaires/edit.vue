@@ -104,7 +104,6 @@ export default {
   },
   methods: {
     save (questionnaire) {
-      console.log('vista')
       this.working = true
       this.success = false
       this.error = false
