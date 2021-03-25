@@ -12,9 +12,10 @@
         :disabled="disabled"
         :readonly="readonly"
         class="input"
-        :class="{ 'is-static': readonly }"
+        :class="classList"
         type="text"
         @input="$emit('input', $event.target.value)"
+        :placeholder="placeholder"
       >
     </div>
   </div>
@@ -24,6 +25,11 @@
 export default {
   name: 'Input',
   props: {
+    size: {
+      type: String,
+      required: false,
+      default: 'normal'
+    },
     label: {
       type: String,
       required: false,
@@ -40,7 +46,21 @@ export default {
     readonly: {
       type: Boolean,
       default: false
+    },
+    placeholder: {
+      type: String,
+      required: false,
+      default: ''
+    }
+  },
+  computed: {
+    classList () {      
+      const size =  'is-' + this.size
+      const isStatic = this.readonly ? 'is-static' : ''
+
+      return [size, isStatic]
     }
   }
 }
 </script>
+ 

@@ -17,22 +17,39 @@
         <div
           v-for="category in categories"
           :key="category"
-          class="columns"
         >
-          <div class="column is-12">
-            <h3 class="title is-6">{{ category }}</h3>
-            <CheckboxSwitch
-              v-for="(answer, index) in groupedAnswers[category]"
-              :key="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
-              :id="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
-              v-model="answer.answer"
-              :disabled="working"
-              :value="true"
-              :label="answer.question"
-              @change="save(answer)"
-            />
+
+        <h3 class="title is-6">{{ category }}</h3>
+        <div
+          v-for="(answer, index) in groupedAnswers[category]"
+          :key="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
+        >
+          <div class="columns is-mobile">
+            <div class="column is-12">{{ answer.question }}</div>
           </div>
-        </div> 
+          <div class="columns is-mobile">
+            <div class="column is-4">            
+              <CheckboxSwitch              
+                :id="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
+                v-model="answer.answer"
+                :disabled="working"
+                :value="true"
+                :label="'Já'"
+                @change="save(answer)"
+              />
+            </div>
+            <div class="column is-8">
+              <Input
+                v-model="answer.comment"
+                :size="'small'"
+                :disabled="working"
+                :placeholder="'Nánar'"
+                
+              />
+            </div>
+          </div> 
+          <hr />
+        </div>
       </form>
     </section>
   </div>
@@ -43,6 +60,7 @@ import agent from 'superagent'
 import Hero from '../_components/hero'
 import Notification from '../_components/notification'
 import CheckboxSwitch from '../_components/checkboxswitch'
+import Input from '../_components/input'
 import EditMixin from '../_mixins/edit'
 import groupBy from 'lodash.groupby'
 
@@ -51,7 +69,8 @@ export default {
   components: {
     Hero,
     Notification,
-    CheckboxSwitch
+    CheckboxSwitch,
+    Input
   },
   mixins: [EditMixin],
   data () {
