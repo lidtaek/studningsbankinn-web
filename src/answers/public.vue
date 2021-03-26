@@ -48,6 +48,30 @@
             <div class="column is-12"><hr /></div>
           </div>
         </div>
+
+        <div class="columns">
+          <div class="column is-12 has-text-centered">
+            <Button
+              label="Ljúka"
+              :disabled="false"
+              @click="thankyou=true"
+            />
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-12 has-text-centered">
+            <span v-if="thankyou">
+              <strong>Takk fyrir þáttökuna!</strong><br />
+              <small>
+                Svörin þín hafa verið skráð.<br />
+                Þú mátt loka glugganum
+              </small>
+            </span>
+            <span v-else>&nbsp;<br />&nbsp; </span>
+          </div>
+        </div>
+        
       </form>
     </section>
   </div>
@@ -59,6 +83,7 @@ import Hero from '../_components/hero'
 import Notification from '../_components/notification'
 import CheckboxSwitch from '../_components/checkboxswitch'
 import Input from '../_components/input'
+import Button from '../_components/button'
 import EditMixin from '../_mixins/edit'
 import groupBy from 'lodash.groupby'
 
@@ -68,11 +93,13 @@ export default {
     Hero,
     Notification,
     CheckboxSwitch,
-    Input
+    Input,
+    Button
   },
   mixins: [EditMixin],
   data () {
     return {
+      thankyou: false,
       answersApi: {},
       answers: [],
       questionsApi: {},
