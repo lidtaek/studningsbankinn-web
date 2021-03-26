@@ -19,7 +19,7 @@
           :key="category"
         >
 
-          <h3 class="title is-6">{{ category }}</h3>
+          <h3 class="title is-4">{{ category }}</h3>
           <div
             v-for="(answer, index) in groupedAnswers[category]"
             :key="'a' + index + '-' + answer.placeId + '-' + answer.questionId"

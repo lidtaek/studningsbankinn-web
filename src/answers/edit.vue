@@ -19,7 +19,7 @@
           class="columns"
         >
           <div class="column is-12">
-            <h3 class="title is-6">{{ category }}</h3>
+            <h3 class="title is-4">{{ category }}</h3>
             <CheckboxSwitch
               v-for="(answer, index) in groupedAnswers[category]"
               :key="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
