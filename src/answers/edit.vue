@@ -29,6 +29,17 @@
               @change="save(answer)"
             />
           </div>
+
+          <div class="column is-12">
+            <CheckboxSwitch
+              :id="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
+              v-model="answer.verified"
+              :disabled="working"
+              :value="true"
+              :label="'Staðfest'"
+              @change="save(answer)"
+            />
+          </div>
         </div>
       </form>
     </section>
@@ -41,13 +52,15 @@ import Hero from '../_components/hero'
 import Notification from '../_components/notification'
 import CheckboxSwitch from '../_components/checkboxswitch'
 import EditMixin from '../_mixins/edit'
+import Checkboxswitch from '../_components/checkboxswitch.vue'
 
 export default {
   name: 'AnswersEdit',
   components: {
     Hero,
     Notification,
-    CheckboxSwitch
+    CheckboxSwitch,
+    Checkboxswitch
   },
   mixins: [EditMixin],
   data () {
