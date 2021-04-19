@@ -50,8 +50,7 @@ export default {
   components: {
     Hero,
     Notification,
-    CheckboxSwitch,
-    Checkboxswitch
+    CheckboxSwitch,    
   },
   mixins: [EditMixin],
   data () {
