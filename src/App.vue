@@ -31,7 +31,7 @@
       </div>
 
       <div
-        v-if="user.name"
+        v-if="user.isAdmin"
         id="navbar"
         class="navbar-menu"
         :class="{'is-active': burger }"
@@ -169,7 +169,9 @@ export default {
     },
     logout () {
       this.user = {}
-      this.$router.go()
+      this.$router.push({
+        name: 'Login'
+      })
     }
   }
 }

@@ -8,7 +8,9 @@
       <table class="table is-fullwidth">
         <thead>
           <tr>
-            <th width="1%">
+            <th
+              class="has-text-centered has-text-grey-light"
+              width="1%">
               #
             </th>
             <th width="90%">
@@ -22,7 +24,7 @@
             v-for="category in placeCategories"
             :key="category.id"
           >
-            <td>{{ category.id }}</td>
+            <td class="has-text-centered has-text-grey-light">{{ category.id }}</td>
             <td>{{ category.name }}</td>
             <td class="has-text-right">
               <button

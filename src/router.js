@@ -52,6 +52,11 @@ export default new Router({
       component: () => import('./answers/edit.vue')
     },
     {
+      name: 'Answer',
+      path: '/svara/:token',
+      component: () => import('./answers/public.vue')
+    },
+    {
       name: 'ListUsers',
       path: '/users',
       component: () => import('./users/list.vue')
@@ -70,11 +75,6 @@ export default new Router({
       name: 'EditQuestionnaires',
       path: '/questionnaires/:id',
       component: () => import('./questionnaires/edit.vue')
-    },
-    {
-      name: 'ViewQuestionnaire',
-      path: '/questionnaire/:token',
-      component: () => import('./questionnaires/questionnaire.vue')
     },
     {
       name: 'ListPlaceCategories',

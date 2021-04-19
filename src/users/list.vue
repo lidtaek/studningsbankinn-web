@@ -8,7 +8,10 @@
       <table class="table is-fullwidth">
         <thead>
           <tr>
-            <th width="9%">
+            <th
+              class="has-text-centered has-text-grey-light"
+              width="9%"
+            >
               #
             </th>
             <th width="40%">
@@ -37,7 +40,7 @@
             v-for="user in users"
             :key="user.id"
           >
-            <td>{{ user.id }}</td>
+            <td class="has-text-centered has-text-grey-light">{{ user.id }}</td>
             <td>{{ user.name }}</td>
             <td>{{ userType(user) }}</td>
             <td class="has-text-right">

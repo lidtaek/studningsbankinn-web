@@ -22,21 +22,21 @@
           />
         </div>
 
-        <div class="columns">
-          <Button
-            :disabled="working"
-            label="Vista"
-            class="column is-6"
-            @click="save()"
-          />
-
+        <div class="columns">           
           <Button
             v-if="isEdit"
             :disabled="working"
             type="danger"
             label="Eyða"
-            class="column is-6 has-text-right"
+            class="column is-6"
             @click="del()"
+          />
+
+          <Button
+            :disabled="working"
+            label="Vista"
+            class="column is-6 has-text-right"
+            @click="save()"
           />
         </div>
       </form>
