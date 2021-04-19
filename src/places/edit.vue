@@ -28,7 +28,7 @@
             label="Flokkur"
             class="column is-4"
           />
-        </div>
+        </div>         
 
         <div class="columns">
           <Textarea
@@ -41,33 +41,47 @@
 
         <div class="columns">
           <Input
+            v-model="place.contact"
+            :disabled="working"
+            label="Tengiliður"
+            class="column is-6"
+          />        
+
+          <Input
+            v-model="place.email"
+            :disabled="working"
+            label="Netfang"
+            class="column is-6"
+          />
+        </div>
+
+        <div class="columns">        
+          <Input
             v-model="place.website"
             :disabled="working"
             label="Vefsíða"
-            class="column is-6"
+            class="column is-3"
           />
 
           <Input
             v-model="place.phone"
             :disabled="working"
             label="Símanúmer"
-            class="column is-6"
-          />
-        </div>
-
-        <div class="columns">
+            class="column is-3"
+          />        
+        
           <Input
             v-model="place.address"
             :disabled="working"
             label="Heimilisfang"
-            class="column is-6"
+            class="column is-4"
           />
 
           <Input
             v-model="place.postcode"
             :disabled="working"
             label="Póstnúmer"
-            class="column is-6"
+            class="column is-2"
           />
         </div>
 
@@ -157,7 +171,7 @@ export default {
       })
       .catch(e => {
         this.error = true
-        this.message = 'Villa kom upp við að sækja staðarflokka'
+        this.message = 'Villa kom upp við að sækja staði.'
       })
   },
   methods: {
