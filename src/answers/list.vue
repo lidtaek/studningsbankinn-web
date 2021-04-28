@@ -14,9 +14,13 @@
             >
               #
             </th>
-            <th width="90%">
+            <th width="89%">
               Staður
             </th>
+            <th
+              width="1%"
+              class="has-text-right"
+            />
             <th
               width="1%"
               class="has-text-right"
@@ -30,6 +34,17 @@
           >
             <td class="has-text-centered has-text-grey-light">{{ place.id }}</td>
             <td>{{ place.name }}</td>
+            <td class="has-text-right">
+              <a
+                class="button is-small is-primary"
+                :href="'/#/svara/' + place.userToken"
+                target="_blank"
+              >
+                <span class="icon">
+                  <i class="fas fa-list" />
+                </span>
+              </a>
+            </td>
             <td class="has-text-right">
               <button
                 class="button is-small is-warning"
