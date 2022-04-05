@@ -52,11 +52,6 @@ export default new Router({
       component: () => import('./answers/edit.vue')
     },
     {
-      name: 'Answer',
-      path: '/svara/:token',
-      component: () => import('./answers/public.vue')
-    },
-    {
       name: 'ListUsers',
       path: '/users',
       component: () => import('./users/list.vue')
@@ -90,6 +85,16 @@ export default new Router({
       name: 'ListVotes',
       path: '/votes',
       component: () => import('./votes/list.vue')
-    }
+    },
+    {
+      name: 'Answer',
+      path: '/svara/:token',
+      component: () => import('./answers/public.vue')
+    },
+    {
+      name: 'Place',
+      path: '/upplysingar/:token',
+      component: () => import('./places/public.vue')
+    },
   ]
 })
