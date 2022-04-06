@@ -10,21 +10,25 @@
         <div class="columns">
           <div class="column is-12 has-text-centered">
             <div class="block">
-              Velkominn í Stuðningsbankann. Hér getur þú breytt almennum upplýsingum svo sem lýsingu, tengiliði, netfangi og símanúmeri. Þú getur líka fyllt út svör við spurningalistanum fyrir þinn skóla.
+              <h1 class="title">Velkominn í Stuðningsbankann.</h1>                            
             </div>
           </div>
         </div>
         <div class="columns">
           <div class="column is-6 has-text-centered">
+            <p>Hér getur þú breytt almennum upplýsingum svo sem lýsingu, tengiliði, netfangi og símanúmeri.</p>
+            <br />
             <Button
-              label="Upplýsingar"
+              label="Breyta upplýsingum"
               :disabled="false"
               @click="goToPlace"
             />
           </div>
-          <div class="column is-6 has-text-centered">
+          <div class="column is-6 has-text-centered divider">
+            <p>Hér getur þú skráð svör við spurningalistanum fyrir þinn skóla.</p>
+            <br />
             <Button
-              label="Svör"
+              label="Skrá svör"
               :disabled="false"
               @click="goToAnswer"
             />
@@ -100,5 +104,8 @@ export default {
 <style scoped>
 .table td {
   vertical-align: middle;
+}
+.divider {
+  border-left: 1px solid hsl(0, 0%, 86%)
 }
 </style>
