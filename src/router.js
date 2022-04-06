@@ -87,6 +87,11 @@ export default new Router({
       component: () => import('./votes/list.vue')
     },
     {
+      name: 'Actions',
+      path: '/yfirlit/:token',
+      component: () => import('./actions/actions.vue')
+    },
+    {
       name: 'Answer',
       path: '/svara/:token',
       component: () => import('./answers/public.vue')
