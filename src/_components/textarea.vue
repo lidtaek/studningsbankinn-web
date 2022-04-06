@@ -6,7 +6,7 @@
         :value="value"
         :disabled="disabled"
         class="textarea"
-        rows="2"
+        rows="4"
         @input="$emit('input', $event.target.value)"
       />
     </div>
