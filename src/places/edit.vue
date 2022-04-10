@@ -18,7 +18,23 @@
             v-model="place.name"
             :disabled="working"
             label="Nafn"
-            class="column is-8"
+            class="column is-12"
+          />          
+        </div>
+
+        <div class="columns">
+          <Input
+            v-model="place.shortName"
+            :disabled="working"
+            label="Stutt nafn"
+            class="column is-4"
+          />
+
+          <Input
+            v-model="place.abbreviation"
+            :disabled="working"
+            label="Skammstöfun"
+            class="column is-2"
           />
 
           <Select
@@ -26,9 +42,9 @@
             :disabled="working"
             :options="placeCategories"
             label="Flokkur"
-            class="column is-4"
+            class="column is-6"
           />
-        </div>         
+        </div>      
 
         <div class="columns">
           <Textarea

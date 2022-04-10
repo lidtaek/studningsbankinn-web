@@ -18,8 +18,22 @@
             v-model="place.name"
             :disabled="working"
             label="Nafn"
-            class="column is-12"
-          />         
+            class="column is-7"
+          />
+
+          <Input
+            v-model="place.shortName"
+            :disabled="working"
+            label="Stutt nafn"
+            class="column is-3"
+          />
+
+          <Input
+            v-model="place.abbreviation"
+            :disabled="working"
+            label="Skammstöfun"
+            class="column is-2"
+          />
         </div>         
 
         <div class="columns">
