@@ -43,7 +43,7 @@
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-compress": "^2.0.2",
     "vue-hot-reload-api": "^2.3.4",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "~2.6.11"
   },
   "posthtml": {
     "recognizeSelfClosing": true

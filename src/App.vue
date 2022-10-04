@@ -31,7 +31,7 @@
       </div>
 
       <div
-        v-if="user.isAdmin"
+        v-if="user.isAdmin || user.isOrganization"
         id="navbar"
         class="navbar-menu"
         :class="{'is-active': burger }"
