@@ -1,8 +1,8 @@
 <template>
   <div>
     <Hero
-      title="Spurningalistar"
-      subtitle="Stofnaðu nýjan lista eða breyttu eldri skráningu."
+      title="Fullyrðingar"
+      subtitle="Stofnaðu nýja fullyrðingu eða breyttu eldri skráningu."
     />
     <section class="box">
       <table class="table is-fullwidth">
@@ -38,15 +38,15 @@
         </thead>
         <tbody>
           <tr
-            v-for="category in placeCategories"
-            :key="category.id"
+            v-for="statement in statements"
+            :key="statement.id"
           >
-            <td class="has-text-centered has-text-grey-light">{{ category.id }}</td>
-            <td>{{ category.name }}</td>
+            <td class="has-text-centered has-text-grey-light">{{ statement.id }}</td>
+            <td>{{ statement.statement }}</td>
             <td class="has-text-right">
               <button
                 class="button is-small is-warning"
-                @click="editQuestionnaires(category.id)"
+                @click="editQuestions(statement.id)"
               >
                 <span class="icon">
                   <i class="fas fa-list" />
@@ -56,7 +56,7 @@
             <td class="has-text-right">
               <button
                 class="button is-small is-warning"
-                @click="edit(category.id)"
+                @click="edit(statement.id)"
               >
                 <span class="icon">
                   <i class="fas fa-pen" />
@@ -75,40 +75,40 @@ import makeAPI from '../api'
 import Hero from '../_components/hero'
 
 export default {
-  name: 'PlaceCategoriesList',
+  name: 'StatementsList',
   components: {
     Hero
   },
   data () {
     return {
-      placeCategories: []
+      statements: []
     }
   },
   created () {
-    const placeCategoriesApi = makeAPI('placecategories')
+    const statementsApi = makeAPI('statements')
 
-    placeCategoriesApi
+    statementsApi
       .getAll()
-      .then(categories => {
-        this.placeCategories = categories
+      .then(statements => {
+        this.statements = statements
       })
   },
   methods: {
     add () {
       this.$router.push({
-        name: 'EditPlaceCategories',
+        name: 'EditStatements',
         params: { id: 'add' }
       })
     },
     edit (id) {
       this.$router.push({
-        name: 'EditPlaceCategories',
+        name: 'EditStatements',
         params: { id }
       })
     },
-    editQuestionnaires (id) {
+    editQuestions (id) {
       this.$router.push({
-        name: 'EditQuestionnaires',
+        name: 'EditStatementQuestions',
         params: { id }
       })
     }

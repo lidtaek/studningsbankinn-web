@@ -54,7 +54,7 @@
                 target="_blank"
               >
                 <span class="icon">
-                  <i class="fas fa-list" />
+                  <i class="fas fa-link" />
                 </span>
               </a>
             </td>

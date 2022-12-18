@@ -50,7 +50,7 @@
             class="navbar-item"
             active-class="is-active"
           >
-            Staðarflokkar
+            Spurningalistar
           </router-link>
 
           <router-link
@@ -68,15 +68,7 @@
           >
             Spurningaflokkar
           </router-link>
-
-          <router-link
-            to="/questionnaires"
-            class="navbar-item"
-            active-class="is-active"
-          >
-            Spurningalistar
-          </router-link>
-
+          
           <router-link
             to="/answers"
             class="navbar-item"
@@ -86,11 +78,11 @@
           </router-link>
 
           <router-link
-            to="/votes"
+            to="/statements"
             class="navbar-item"
             active-class="is-active"
           >
-            Atkvæði
+            Fullyrðingar
           </router-link>
 
           <router-link

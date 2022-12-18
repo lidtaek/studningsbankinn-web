@@ -33,15 +33,15 @@
             :key="place.id"
           >
             <td class="has-text-centered has-text-grey-light">{{ place.id }}</td>
-            <td>{{ place.name }}</td>
-            <td class="has-text-right">
+            <td>{{ place.name }}</td>            
+             <td class="has-text-right">
               <a
                 class="button is-small is-primary"
                 :href="'/#/svara/' + place.userToken"
                 target="_blank"
               >
                 <span class="icon">
-                  <i class="fas fa-list" />
+                  <i class="fas fa-link" />
                 </span>
               </a>
             </td>
@@ -54,7 +54,7 @@
                   <i class="fas fa-pen" />
                 </span>
               </button>
-            </td>
+            </td>           
           </tr>
         </tbody>
       </table>

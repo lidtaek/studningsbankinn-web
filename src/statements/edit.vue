@@ -15,9 +15,9 @@
 
         <div class="columns">
           <Input
-            v-model="category.name"
+            v-model="statement.statement"
             :disabled="working"
-            label="Heiti"
+            label="Fullyrðing"
             class="column is-12"
           />
         </div>
@@ -53,7 +53,7 @@ import Button from '../_components/button'
 import EditMixin from '../_mixins/edit'
 
 export default {
-  name: 'PlaceCategoriesEdit',
+  name: 'StatementsEdit',
   components: {
     Input,
     Button,
@@ -63,32 +63,32 @@ export default {
   mixins: [EditMixin],
   data () {
     return {
-      placeCategoriesApi: {},
-      category: {}
+      statementsApi: {},
+      statement: {}
     }
   },
   computed: {
     title () {
-      return this.category.name ? this.category.name : 'Spurningalistar'
+      return this.statement.statement ? this.statement.statement : 'Fullyrðingar'
     },
     subtitle () {
-      return this.isEdit ? 'Var heitið á listanum vitlaust?' : 'Skráðu nýjan spurningalista.'
+      return this.isEdit ? 'Breyta fullyrðingu í álfi' : 'Skrá fullyrðingu fyrir álf.'
     }
   },
   created () {
     this.working = true
-    this.placeCategoriesApi = makeAPI('placecategories')
+    this.statementsApi = makeAPI('statements')
     const id = this.$route.params.id
 
-    this.placeCategoriesApi
+    this.statementsApi
       .getSingle(id)
-      .then(category => {
-        this.category = category
+      .then(statement => {
+        this.statement = statement
         this.working = false
       })
       .catch(() => {
         this.error = true
-        this.message = 'Villa kom upp. Spurningaflokkur fannst ekki.'
+        this.message = 'Villa kom upp. Fullyrðing fannst ekki.'
       })
   },
   methods: {
@@ -97,10 +97,10 @@ export default {
       this.success = false
       this.error = false
 
-      this.placeCategoriesApi
-        .upsert(this.category)
-        .then(category => {
-          if (category.id) {
+      this.statementsApi
+        .upsert(this.statement)
+        .then(statement => {
+          if (statement.id) {
             this.success = true
             this.message = 'Uppfærsla tókst'
           } else {
@@ -121,15 +121,15 @@ export default {
       this.success = false
       this.error = false
 
-      this.placeCategoriesApi
-        .delete(this.category)
-        .then(category => {
-          if (category.id) {
+      this.statementsApi
+        .delete(this.statement)
+        .then(statement => {
+          if (statement.id) {
             this.success = true
             this.message = 'Uppfærsla tókst'
             setTimeout(() => {
               this.$router.push({
-                name: 'ListPlaceCategories'
+                name: 'ListStatements'
               })
             }, 2500)
           } else {

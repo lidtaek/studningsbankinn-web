@@ -82,9 +82,19 @@ export default new Router({
       component: () => import('./placecategories/edit.vue')
     },
     {
-      name: 'ListVotes',
-      path: '/votes',
-      component: () => import('./votes/list.vue')
+      name: 'ListStatements',
+      path: '/statements',
+      component: () => import('./statements/list.vue')
+    },
+    {
+      name: 'EditStatements',
+      path: '/statements/:id',
+      component: () => import('./statements/edit.vue')
+    },    
+    {
+      name: 'EditStatementQuestions',
+      path: '/statementquestions/:id',
+      component: () => import('./statementquestions/edit.vue')
     },
     {
       name: 'Overview',
