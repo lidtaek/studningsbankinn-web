@@ -18,7 +18,14 @@
             v-model="statement.statement"
             :disabled="working"
             label="Fullyrðing"
-            class="column is-12"
+            class="column is-8"
+          />
+
+          <Input
+            v-model="statement.ordering"
+            :disabled="working"
+            label="Röðun"
+            class="column is-4"
           />
         </div>
 
