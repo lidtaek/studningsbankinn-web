@@ -19,17 +19,15 @@
           class="columns"
         >
           <div class="column is-12">
-            <h3 class="title is-4">{{ category }}</h3>
-            <CheckboxSwitch
-              v-for="(answer, index) in groupedAnswers[category]"
-              :key="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
-              :id="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
-              v-model="answer.answer"
-              :disabled="working"
-              :value="true"
-              :label="answer.question"
-              @change="save(answer)"
-            />
+            <h3 class="title is-4">{{ category }}</h3>            
+              <RadioGroup
+                v-for="(answer, index) in groupedAnswers[category]"
+                :key="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
+                v-model="answer.answer"
+                :disabled="working"
+                :label="answer.question"
+                @change="save(answer)"
+              />
           </div>
         </div>          
       </form>
@@ -41,7 +39,7 @@
 import makeAPI from '../api'
 import Hero from '../_components/hero'
 import Notification from '../_components/notification'
-import CheckboxSwitch from '../_components/checkboxswitch'
+import RadioGroup from '../_components/radiogroup'
 import EditMixin from '../_mixins/edit'
 import groupBy from 'lodash.groupby'
 
@@ -50,7 +48,7 @@ export default {
   components: {
     Hero,
     Notification,
-    CheckboxSwitch,    
+    RadioGroup,    
   },
   mixins: [EditMixin],
   data () {

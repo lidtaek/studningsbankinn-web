@@ -27,12 +27,9 @@
           >
             <div class="column is-12 mb-2">{{ answer.question }}</div>
             <div class="column is-4">
-              <CheckboxSwitch
-                :id="'a' + index + '-' + answer.placeId + '-' + answer.questionId"
+              <RadioGroup
                 v-model="answer.answer"
                 :disabled="working"
-                :value="true"
-                :label="'Já'"
                 @change="save(answer)"
               />
             </div>
@@ -81,7 +78,7 @@
 import agent from 'superagent'
 import Hero from '../_components/hero'
 import Notification from '../_components/notification'
-import CheckboxSwitch from '../_components/checkboxswitch'
+import RadioGroup from '../_components/radiogroup'
 import Input from '../_components/input'
 import Button from '../_components/button'
 import EditMixin from '../_mixins/edit'
@@ -92,7 +89,7 @@ export default {
   components: {
     Hero,
     Notification,
-    CheckboxSwitch,
+    RadioGroup,
     Input,
     Button
   },
